@@ -23,7 +23,7 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #fff8f0 0%, #f5f0ff 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -35,7 +35,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -106,7 +106,7 @@
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 50px 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
             max-width: 1000px;
             margin: 0 auto;
         }
@@ -114,7 +114,7 @@
         .landing-title {
             font-size: 48px;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
@@ -134,7 +134,7 @@
         }
         
         .feature-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             color: white;
             padding: 30px;
             border-radius: 15px;
@@ -174,7 +174,7 @@
             background: white;
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
             max-width: 450px;
             width: 100%;
             margin: 0 auto;
@@ -188,7 +188,7 @@
         .auth-logo h2 {
             font-size: 32px;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -201,12 +201,12 @@
         }
         
         .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            border-color: #ff9966;
+            box-shadow: 0 0 0 0.2rem rgba(255, 153, 102, 0.25);
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             border: none;
             border-radius: 10px;
             padding: 12px 30px;
@@ -216,7 +216,7 @@
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 153, 102, 0.4);
         }
         
         /* Dashboard */
@@ -243,7 +243,7 @@
             width: 45px;
             height: 45px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -267,7 +267,7 @@
         }
         
         .stat-icon {
-            color: #667eea;
+            color: #ff9966;
         }
         
         /* Cards */
@@ -311,27 +311,128 @@
             cursor: pointer;
             transition: all 0.3s ease;
             background: white;
+            position: relative;
+            overflow: hidden;
         }
         
         .mood-item:hover {
-            border-color: #667eea;
+            border-color: #ff9966;
             transform: scale(1.05);
         }
         
         .mood-item.active {
-            border-color: #667eea;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-color: #ff9966;
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
         }
         
+        /* Animasi Emoji Mood */
         .mood-emoji {
             font-size: 40px;
             margin-bottom: 8px;
+            display: inline-block;
+            transition: all 0.5s ease;
+            position: relative;
+        }
+        
+        /* Animasi untuk setiap emoji */
+        .mood-item[data-mood="happy"]:hover .mood-emoji {
+            animation: bounce 0.6s ease infinite alternate;
+            transform-origin: bottom;
+        }
+        
+        .mood-item[data-mood="good"]:hover .mood-emoji {
+            animation: float 0.8s ease infinite alternate;
+        }
+        
+        .mood-item[data-mood="neutral"]:hover .mood-emoji {
+            animation: wobble 0.7s ease infinite alternate;
+        }
+        
+        .mood-item[data-mood="sad"]:hover .mood-emoji {
+            animation: gentleBounce 0.9s ease infinite alternate;
+            transform-origin: bottom;
+        }
+        
+        .mood-item[data-mood="stressed"]:hover .mood-emoji {
+            animation: shake 0.5s ease infinite alternate;
+        }
+        
+        /* Keyframes Animasi */
+        @keyframes bounce {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-10px) scale(1.1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+            100% { transform: translateY(-10px) rotate(-5deg); }
+        }
+        
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+        
+        @keyframes gentleBounce {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-5px) scale(1.05); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+        
+        /* Efek glow saat hover */
+        .mood-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+        
+        .mood-item:hover::before {
+            opacity: 1;
+        }
+        
+        .mood-emoji, .mood-label {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Efek saat active/selected */
+        .mood-item.active .mood-emoji {
+            animation: happyDance 1s ease;
+        }
+        
+        @keyframes happyDance {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(15deg); }
+            50% { transform: scale(1.1) rotate(-15deg); }
+            75% { transform: scale(1.2) rotate(15deg); }
+            100% { transform: scale(1) rotate(0deg); }
         }
         
         .mood-label {
             font-size: 13px;
             font-weight: 500;
             color: #666;
+            transition: color 0.3s ease;
+        }
+        
+        .mood-item:hover .mood-label {
+            color: #ff9966;
+            font-weight: 600;
         }
         
         /* Quest Cards */
@@ -341,7 +442,7 @@
         }
         
         .quest-card {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
             padding: 20px;
             border-radius: 12px;
             border: 2px solid transparent;
@@ -350,13 +451,13 @@
         }
         
         .quest-card:hover {
-            border-color: #667eea;
+            border-color: #ff9966;
             transform: translateX(5px);
         }
         
         .quest-card.active {
-            border-color: #667eea;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border-color: #ff9966;
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.2) 0%, rgba(255, 94, 98, 0.2) 100%);
         }
         
         .quest-header {
@@ -375,7 +476,7 @@
         }
         
         .quest-xp {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             color: white;
             padding: 5px 12px;
             border-radius: 20px;
@@ -391,7 +492,7 @@
         
         .quest-duration {
             font-size: 13px;
-            color: #667eea;
+            color: #ff9966;
             font-weight: 500;
         }
         
@@ -405,14 +506,20 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             margin: 0 auto 30px;
             color: white;
-            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 40px rgba(255, 153, 102, 0.4);
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 10px 40px rgba(255, 153, 102, 0.4); }
+            100% { box-shadow: 0 10px 60px rgba(255, 153, 102, 0.6); }
         }
         
         .timer-time {
@@ -436,7 +543,7 @@
         
         .progress-bar-custom {
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -451,7 +558,7 @@
         .streak-display {
             text-align: center;
             padding: 30px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
             border-radius: 15px;
             margin-bottom: 20px;
         }
@@ -459,7 +566,7 @@
         .streak-number {
             font-size: 72px;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1;
@@ -474,6 +581,12 @@
         .streak-fire {
             font-size: 40px;
             margin-bottom: 10px;
+            animation: fireFlicker 1s ease-in-out infinite alternate;
+        }
+        
+        @keyframes fireFlicker {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.1); opacity: 1; }
         }
         
         /* History Table */
@@ -491,7 +604,7 @@
         
         .history-table th {
             font-weight: 600;
-            color: #667eea;
+            color: #ff9966;
             font-size: 14px;
         }
         
@@ -511,7 +624,12 @@
             text-align: center;
             padding: 20px;
             border-radius: 12px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .badge-item:hover {
+            transform: scale(1.05);
         }
         
         .badge-item.locked {
@@ -522,6 +640,11 @@
         .badge-icon {
             font-size: 40px;
             margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .badge-item:hover .badge-icon {
+            transform: rotate(15deg);
         }
         
         .badge-name {
@@ -532,13 +655,19 @@
         
         /* Motivational Message */
         .motivational-message {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             color: white;
             padding: 25px;
             border-radius: 15px;
             text-align: center;
             margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 153, 102, 0.4);
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .motivational-message h4 {
@@ -550,6 +679,300 @@
             margin: 0;
             font-size: 14px;
             opacity: 0.95;
+        }
+        
+        /* =========== DARK MODE =========== */
+        
+        body.dark-mode {
+            background: linear-gradient(135deg, #2d1b69 0%, #1a1a2e 100%);
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .landing-card,
+        body.dark-mode .auth-card,
+        body.dark-mode .navbar-custom,
+        body.dark-mode .card-custom,
+        body.dark-mode .streak-display,
+        body.dark-mode .history-table th,
+        body.dark-mode .history-table td {
+            background: rgba(40, 35, 70, 0.95);
+            color: #f0f0f0;
+            border-color: #3a3466;
+        }
+        
+        body.dark-mode .landing-title,
+        body.dark-mode .auth-logo h2,
+        body.dark-mode .text-gradient {
+            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        body.dark-mode .feature-card,
+        body.dark-mode .motivational-message {
+            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
+            color: white;
+        }
+        
+        body.dark-mode .btn-primary {
+            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
+            border: none;
+        }
+        
+        body.dark-mode .btn-primary:hover {
+            box-shadow: 0 5px 20px rgba(157, 78, 221, 0.4);
+        }
+        
+        body.dark-mode .form-control {
+            background-color: #3a3466;
+            border-color: #4a4477;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .form-control:focus {
+            background-color: #3a3466;
+            border-color: #ff9966;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .text-muted {
+            color: #b8b5d0 !important;
+        }
+        
+        body.dark-mode .history-table th {
+            color: #ff9966;
+        }
+        
+        body.dark-mode .history-table td {
+            color: #b8b5d0;
+            border-bottom-color: #4a4477;
+        }
+        
+        body.dark-mode .mood-item,
+        body.dark-mode .quest-card,
+        body.dark-mode .badge-item {
+            background: #3a3466;
+            border-color: #4a4477;
+        }
+        
+        body.dark-mode .mood-item:hover,
+        body.dark-mode .quest-card:hover {
+            border-color: #ff9966;
+        }
+        
+        body.dark-mode .mood-item.active {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+            border-color: #ff9966;
+        }
+        
+        body.dark-mode .mood-item::before {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+        }
+        
+        body.dark-mode .quest-card.active {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+            border-color: #ff9966;
+        }
+        
+        body.dark-mode .timer-circle {
+            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
+            box-shadow: 0 10px 40px rgba(157, 78, 221, 0.4);
+            animation: pulseGlowDark 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulseGlowDark {
+            0% { box-shadow: 0 10px 40px rgba(157, 78, 221, 0.4); }
+            100% { box-shadow: 0 10px 60px rgba(157, 78, 221, 0.6); }
+        }
+        
+        body.dark-mode .progress-custom {
+            background: #3a3466;
+        }
+        
+        body.dark-mode .progress-bar-custom {
+            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
+        }
+        
+        body.dark-mode .streak-display {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+        }
+        
+        body.dark-mode .mood-label,
+        body.dark-mode .quest-desc,
+        body.dark-mode .card-title {
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .badge-name {
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .mood-item:hover .mood-label {
+            color: #ff9966;
+        }
+        
+        body.dark-mode .quest-duration {
+            color: #ff9966;
+        }
+        
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .theme-toggle-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            animation: rotateIn 0.5s ease;
+        }
+        
+        @keyframes rotateIn {
+            from { transform: rotate(-180deg); opacity: 0; }
+            to { transform: rotate(0); opacity: 1; }
+        }
+        
+        .theme-toggle-btn:hover {
+            transform: rotate(30deg);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        body.dark-mode .theme-toggle-btn {
+            background: rgba(40, 35, 70, 0.7);
+            color: #ff9966;
+        }
+        
+        /* Streak Protection Indicator */
+        .streak-protection-badge {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            animation: pulseProtection 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulseProtection {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        body.dark-mode .streak-protection-badge {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+        }
+        
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 20px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        body.dark-mode .settings-panel {
+            background: #3a3466;
+            border: 1px solid #4a4477;
+        }
+        
+        .settings-panel.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        body.dark-mode .settings-item {
+            border-bottom-color: #4a4477;
+        }
+        
+        .settings-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        /* Theme Selection */
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .theme-option {
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-option:hover {
+            border-color: #ff9966;
+            transform: translateY(-2px);
+        }
+        
+        .theme-option.active {
+            border-color: #ff9966;
+            background: rgba(255, 153, 102, 0.1);
+        }
+        
+        .theme-option.light {
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+            color: white;
+        }
+        
+        .theme-option.dark {
+            background: linear-gradient(135deg, #2d1b69 0%, #1a1a2e 100%);
+            color: white;
+        }
+        
+        /* Quest Completion Action Buttons */
+        .quest-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
         }
         
         /* Responsive */
@@ -584,11 +1007,20 @@
                 align-items: flex-start;
                 gap: 10px;
             }
+            
+            .settings-panel {
+                width: 280px;
+                right: 10px;
+            }
+            
+            .quest-actions {
+                flex-direction: column;
+            }
         }
         
         /* Utility Classes */
         .text-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -608,6 +1040,44 @@
             <div class="loading-narrative">
                 Memuat petualangan kesehatan mentalmu...<br>
                 Setiap quest adalah langkah menuju versi terbaik dirimu.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle">
+        <button class="theme-toggle-btn" onclick="toggleSettings()">
+            <i class="fas fa-palette"></i>
+        </button>
+    </div>
+    
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <h5 class="mb-3"><i class="fas fa-cog me-2"></i>Pengaturan Tampilan</h5>
+        
+        <div class="settings-item">
+            <div>
+                <div class="fw-semibold">Tema Warna</div>
+                <small class="text-muted">Pilih tema favoritmu</small>
+            </div>
+        </div>
+        
+        <div class="theme-options mb-3">
+            <div class="theme-option light active" data-theme="light" onclick="changeTheme('light')">
+                <i class="fas fa-sun me-1"></i> Light
+            </div>
+            <div class="theme-option dark" data-theme="dark" onclick="changeTheme('dark')">
+                <i class="fas fa-moon me-1"></i> Dark
+            </div>
+        </div>
+        
+        <div class="settings-item">
+            <div>
+                <div class="fw-semibold">Streak Protection</div>
+                <small class="text-muted" id="streakProtectionStatus">3x tersisa bulan ini</small>
+            </div>
+            <div class="streak-protection-badge" id="streakProtectionCount">
+                <i class="fas fa-shield-alt"></i> 3
             </div>
         </div>
     </div>
@@ -747,6 +1217,10 @@
                             <i class="fas fa-fire stat-icon"></i>
                             <span id="userStreak">0 days</span>
                         </div>
+                        <div class="stat-item" title="Streak Protection" onclick="toggleSettings()" style="cursor: pointer;">
+                            <i class="fas fa-shield-alt stat-icon"></i>
+                            <span id="userProtection">3</span>
+                        </div>
                         <button class="btn btn-sm btn-outline-danger" onclick="logout()">
                             <i class="fas fa-sign-out-alt me-1"></i>Keluar
                         </button>
@@ -803,9 +1277,14 @@
                             <div class="quest-list" id="questList">
                                 <!-- Quest items will be populated here -->
                             </div>
-                            <button class="btn btn-primary w-100 mt-3" onclick="startQuest()">
-                                <i class="fas fa-play me-2"></i>Mulai Quest
-                            </button>
+                            <div class="d-flex justify-content-between mt-3">
+                                <button class="btn btn-outline-secondary" onclick="backToMoodSelection()">
+                                    <i class="fas fa-arrow-left me-2"></i>Ubah Mood
+                                </button>
+                                <button class="btn btn-primary" onclick="startQuest()">
+                                    <i class="fas fa-play me-2"></i>Mulai Quest
+                                </button>
+                            </div>
                         </div>
                         
                         <!-- Active Quest Timer -->
@@ -846,9 +1325,14 @@
                                         <div class="h3 text-gradient" id="currentStreakDisplay">0 🔥</div>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" onclick="resetDailyQuest()">
-                                    <i class="fas fa-redo me-2"></i>Kembali
-                                </button>
+                                <div class="quest-actions">
+                                    <button class="btn btn-primary" onclick="goToQuestSelection()">
+                                        <i class="fas fa-plus me-2"></i>Quest Lainnya
+                                    </button>
+                                    <button class="btn btn-outline-secondary" onclick="resetToMoodSelection()">
+                                        <i class="fas fa-redo me-2"></i>Kembali ke Mood
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -904,8 +1388,8 @@
                                     <span class="fw-semibold" id="totalQuestsCompleted">0</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
-                                    <span class="text-muted">Quest Minggu Ini</span>
-                                    <span class="fw-semibold" id="weeklyQuests">0</span>
+                                    <span class="text-muted">Quest Hari Ini</span>
+                                    <span class="fw-semibold" id="todaysQuests">0</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span class="text-muted">Tingkat Konsistensi</span>
@@ -962,6 +1446,7 @@
         let selectedQuest = null;
         let timerInterval = null;
         let timerSeconds = 0;
+        let currentTheme = 'light';
         
         // Quest Database
         const quests = [
@@ -1124,6 +1609,18 @@
             document.querySelectorAll('.mood-item').forEach(item => {
                 item.addEventListener('click', handleMoodSelection);
             });
+            
+            // Close settings panel when clicking outside
+            document.addEventListener('click', function(event) {
+                const settingsPanel = document.getElementById('settingsPanel');
+                const themeToggle = document.querySelector('.theme-toggle-btn');
+                
+                if (settingsPanel && settingsPanel.classList.contains('show') && 
+                    !settingsPanel.contains(event.target) && 
+                    themeToggle && !themeToggle.contains(event.target)) {
+                    settingsPanel.classList.remove('show');
+                }
+            });
         }
         
         // ========================
@@ -1168,9 +1665,12 @@
                 lastQuestDate: null,
                 questsCompleted: [],
                 moodHistory: [],
-                streakProtection: 1,
+                streakProtection: 3, // Reset ke 3 setiap bulan
+                streakProtectionUsedThisMonth: 0,
+                streakProtectionMonth: new Date().getMonth(),
                 badges: [],
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
+                theme: 'light'
             };
             
             users.push(newUser);
@@ -1232,6 +1732,10 @@
             document.getElementById('userName').textContent = currentUser.name;
             document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
             
+            // Load user theme
+            currentTheme = currentUser.theme || 'light';
+            applyTheme(currentTheme);
+            
             // Check streak
             checkAndUpdateStreak();
             
@@ -1239,14 +1743,10 @@
             updateUserStats();
             updateBadges();
             updateHistory();
+            updateStreakProtectionDisplay();
             
             // Check if quest already completed today
-            if (isQuestCompletedToday()) {
-                showCompletedMessage();
-            } else {
-                // Show motivational message
-                updateMotivationalMessage('start');
-            }
+            updateMotivationalMessage('start');
         }
         
         function updateUserStats() {
@@ -1262,6 +1762,7 @@
             document.getElementById('userLevel').textContent = `Level ${level}`;
             document.getElementById('userXP').textContent = `${currentUser.xp} XP`;
             document.getElementById('userStreak').textContent = `${currentUser.streak} days`;
+            document.getElementById('userProtection').textContent = currentUser.streakProtection;
             document.getElementById('streakNumber').textContent = currentUser.streak;
             
             // Update progress bar
@@ -1274,11 +1775,10 @@
             // Update statistics
             document.getElementById('totalQuestsCompleted').textContent = currentUser.questsCompleted.length;
             
-            // Weekly quests
-            const weekAgo = new Date();
-            weekAgo.setDate(weekAgo.getDate() - 7);
-            const weeklyQuests = currentUser.questsCompleted.filter(q => new Date(q.date) >= weekAgo);
-            document.getElementById('weeklyQuests').textContent = weeklyQuests.length;
+            // Today's quests
+            const today = new Date().toDateString();
+            const todaysQuests = currentUser.questsCompleted.filter(q => new Date(q.date).toDateString() === today);
+            document.getElementById('todaysQuests').textContent = todaysQuests.length;
             
             // Consistency rate
             const daysSinceJoined = Math.floor((new Date() - new Date(currentUser.createdAt)) / (1000 * 60 * 60 * 24)) + 1;
@@ -1488,6 +1988,27 @@
         function completeQuest() {
             clearInterval(timerInterval);
             
+            // Check if this is the first quest today for streak calculation
+            const today = new Date().toDateString();
+            const lastQuestDate = currentUser.lastQuestDate ? new Date(currentUser.lastQuestDate).toDateString() : null;
+            
+            // Update streak hanya jika ini adalah quest pertama hari ini
+            if (lastQuestDate !== today) {
+                // Jika quest terakhir bukan kemarin, reset streak
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayString = yesterday.toDateString();
+                
+                if (lastQuestDate !== yesterdayString && lastQuestDate !== null) {
+                    // Jika melewatkan hari, cek proteksi streak
+                    checkAndUpdateStreak();
+                }
+                
+                // Tambah streak untuk hari ini
+                currentUser.streak++;
+                currentUser.lastQuestDate = today;
+            }
+            
             // Add quest to completed
             const questCompletion = {
                 questId: selectedQuest.id,
@@ -1498,13 +2019,7 @@
             };
             
             currentUser.questsCompleted.push(questCompletion);
-            
-            // Add XP
             currentUser.xp += selectedQuest.xp;
-            
-            // Update streak
-            currentUser.streak++;
-            currentUser.lastQuestDate = new Date().toDateString();
             
             // Add mood to history
             currentUser.moodHistory.push({
@@ -1512,31 +2027,14 @@
                 date: new Date().toISOString()
             });
             
-            // Save data
             saveUserData();
-            
-            // Show completion
             showCompletionScreen();
         }
         
         function cancelQuest() {
-            if (confirm('Yakin ingin membatalkan quest? Kamu akan kehilangan streak dan XP berkurang.')) {
+            if (confirm('Yakin ingin membatalkan quest?')) {
                 clearInterval(timerInterval);
-                
-                // Penalty: reduce XP and reset streak
-                currentUser.xp = Math.max(0, currentUser.xp - 20);
-                
-                // Use streak protection if available
-                if (currentUser.streakProtection > 0) {
-                    currentUser.streakProtection--;
-                    alert(`⚠️ Streak Protection digunakan! Kamu masih punya ${currentUser.streakProtection} proteksi tersisa.`);
-                } else {
-                    currentUser.streak = 0;
-                    alert('💔 Quest dibatalkan. Streak kamu direset dan XP berkurang 20.');
-                }
-                
-                saveUserData();
-                resetDailyQuest();
+                goToQuestSelection();
             }
         }
         
@@ -1568,22 +2066,52 @@
                     if (newLevel % 5 === 0) {
                         currentUser.streakProtection++;
                         alert(`🛡️ Bonus: +1 Streak Protection! Total: ${currentUser.streakProtection}`);
+                        updateStreakProtectionDisplay();
                     }
                 }, 500);
             }
         }
         
-        function showCompletedMessage() {
-            document.getElementById('moodSection').classList.add('hidden');
-            document.getElementById('questSection').classList.add('hidden');
+        function goToQuestSelection() {
+            selectedQuest = null;
             document.getElementById('timerSection').classList.add('hidden');
-            document.getElementById('completionSection').classList.remove('hidden');
+            document.getElementById('completionSection').classList.add('hidden');
+            document.getElementById('questSection').classList.remove('hidden');
             
-            const lastQuest = currentUser.questsCompleted[currentUser.questsCompleted.length - 1];
-            document.getElementById('completionMessage').textContent = 
-                'Kamu sudah menyelesaikan quest hari ini! Kembali lagi besok untuk quest baru.';
-            document.getElementById('earnedXP').textContent = `+${lastQuest.xp}`;
-            document.getElementById('currentStreakDisplay').textContent = `${currentUser.streak} 🔥`;
+            // Reset quest selection
+            document.querySelectorAll('.quest-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            updateUserStats();
+        }
+        
+        function backToMoodSelection() {
+            selectedMood = null;
+            selectedQuest = null;
+            
+            document.getElementById('questSection').classList.add('hidden');
+            document.getElementById('moodSection').classList.remove('hidden');
+            
+            // Reset mood selection
+            document.querySelectorAll('.mood-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+        
+        function resetToMoodSelection() {
+            selectedMood = null;
+            selectedQuest = null;
+            
+            document.getElementById('completionSection').classList.add('hidden');
+            document.getElementById('moodSection').classList.remove('hidden');
+            
+            // Reset mood selection
+            document.querySelectorAll('.mood-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            updateUserStats();
         }
         
         function resetDailyQuest() {
@@ -1607,14 +2135,22 @@
             const messageDiv = document.getElementById('motivationalMessage');
             const moodToUse = mood || selectedMood || 'neutral';
             
-            if (type === 'start' && motivationalMessages[moodToUse]) {
+            // Count today's quests
+            const today = new Date().toDateString();
+            const todaysQuests = currentUser.questsCompleted.filter(q => new Date(q.date).toDateString() === today);
+            
+            if (todaysQuests.length > 0) {
+                messageDiv.innerHTML = `<h4>🎯 ${todaysQuests.length} Quest Selesai Hari Ini!</h4><p>Mau coba quest lainnya?</p>`;
+            } else if (type === 'start' && motivationalMessages[moodToUse]) {
                 const message = motivationalMessages[moodToUse].start;
                 messageDiv.innerHTML = `<h4>💪 ${message.split('.')[0]}</h4><p>${message}</p>`;
+            } else {
+                messageDiv.innerHTML = `<h4>🌟 Selamat datang!</h4><p>Mari mulai hari ini dengan komitmen untuk dirimu sendiri.</p>`;
             }
         }
         
         // ========================
-        // Streak Management
+        // Streak Management (Updated)
         // ========================
         
         function checkAndUpdateStreak() {
@@ -1622,37 +2158,108 @@
                 return;
             }
             
+            // Check if streak protection needs to be reset for new month
+            checkStreakProtectionReset();
+            
             const lastDate = new Date(currentUser.lastQuestDate);
             const today = new Date();
             const yesterday = new Date(today);
             yesterday.setDate(yesterday.getDate() - 1);
             
-            // Check if quest was completed yesterday or today
             const lastDateString = lastDate.toDateString();
             const todayString = today.toDateString();
             const yesterdayString = yesterday.toDateString();
             
+            // Jika quest terakhir adalah kemarin, streak tetap
+            if (lastDateString === yesterdayString) {
+                return;
+            }
+            
+            // Jika quest terakhir lebih dari kemarin, streak direset
             if (lastDateString !== todayString && lastDateString !== yesterdayString) {
-                // Streak broken
-                if (currentUser.streakProtection > 0) {
-                    currentUser.streakProtection--;
-                } else {
-                    currentUser.streak = 0;
-                }
+                resetStreak();
+            }
+        }
+        
+        function resetStreak() {
+            // Check if user has streak protection available
+            if (currentUser.streakProtection > 0 && currentUser.streakProtectionUsedThisMonth < 3) {
+                currentUser.streakProtection--;
+                currentUser.streakProtectionUsedThisMonth++;
+                alert(`🛡️ Streak Protection digunakan! Streak kamu tetap ${currentUser.streak}. Streak Protection tersisa: ${currentUser.streakProtection}`);
+                updateStreakProtectionDisplay();
+                saveUserData();
+            } else {
+                // Reset streak jika tidak ada proteksi
+                const lostStreak = currentUser.streak;
+                currentUser.streak = 0;
                 currentUser.lastQuestDate = null;
+                alert(`💔 Streak kamu (${lostStreak} hari) telah padam karena tidak menyelesaikan quest.`);
                 saveUserData();
             }
         }
         
-        function isQuestCompletedToday() {
-            if (!currentUser.lastQuestDate) {
-                return false;
+        function checkStreakProtectionReset() {
+            const currentMonth = new Date().getMonth();
+            
+            // Jika bulan baru, reset streak protection
+            if (currentMonth !== currentUser.streakProtectionMonth) {
+                currentUser.streakProtection = 3;
+                currentUser.streakProtectionUsedThisMonth = 0;
+                currentUser.streakProtectionMonth = currentMonth;
+                updateStreakProtectionDisplay();
+                saveUserData();
+            }
+        }
+        
+        function updateStreakProtectionDisplay() {
+            const protectionCount = document.getElementById('streakProtectionCount');
+            const protectionStatus = document.getElementById('streakProtectionStatus');
+            
+            if (protectionCount) {
+                protectionCount.innerHTML = `<i class="fas fa-shield-alt"></i> ${currentUser.streakProtection}`;
             }
             
-            const lastDate = new Date(currentUser.lastQuestDate);
-            const today = new Date();
+            if (protectionStatus) {
+                const used = currentUser.streakProtectionUsedThisMonth || 0;
+                const remaining = 3 - used;
+                protectionStatus.textContent = `${remaining}x tersisa bulan ini`;
+            }
+        }
+        
+        // ========================
+        // Theme Management Functions
+        // ========================
+        
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('show');
+        }
+        
+        function changeTheme(theme) {
+            currentTheme = theme;
+            currentUser.theme = theme;
+            saveUserData();
+            applyTheme(theme);
             
-            return lastDate.toDateString() === today.toDateString();
+            // Update active theme button
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.theme-option[data-theme="${theme}"]`).classList.add('active');
+            
+            // Close settings panel
+            document.getElementById('settingsPanel').classList.remove('show');
+        }
+        
+        function applyTheme(theme) {
+            // Remove all theme classes
+            document.body.classList.remove('dark-mode');
+            
+            // Add new theme class
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
         }
         
         // ========================
@@ -1699,6 +2306,9 @@
                 users[index] = currentUser;
                 localStorage.setItem('vibequest_users', JSON.stringify(users));
             }
+            
+            // Update streak protection display
+            updateStreakProtectionDisplay();
         }
         
         function isValidEmail(email) {
