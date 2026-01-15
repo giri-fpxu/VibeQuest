@@ -26,9 +26,10 @@
             background: linear-gradient(135deg, #fff8f0 0%, #f5f0ff 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            color: #333; /* Default text color for light mode */
         }
         
-        /* Loading Screen */
+        /* Loading Screen - Diperbarui */
         #loadingScreen {
             position: fixed;
             top: 0;
@@ -47,16 +48,22 @@
         .loading-content {
             text-align: center;
             color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            transform: translateY(-20px);
         }
         
         .loading-spinner {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border: 4px solid rgba(255,255,255,0.3);
             border-top: 4px solid white;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 30px;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 25px;
         }
         
         @keyframes spin {
@@ -65,22 +72,31 @@
         }
         
         .loading-text {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 32px;
+            font-weight: 700;
             margin-bottom: 15px;
-            animation: pulse 2s ease-in-out infinite;
+            animation: bounceIn 0.8s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         
         .loading-narrative {
-            font-size: 14px;
+            font-size: 16px;
             opacity: 0.9;
             max-width: 400px;
             line-height: 1.6;
+            animation: fadeInUp 0.8s ease 0.3s both;
+            margin-top: 10px;
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* Page Container */
@@ -94,72 +110,249 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Landing Page */
+        /* Landing Page - Diperbarui dengan Background Story */
         #landingPage {
             min-height: 100vh;
             display: flex;
             align-items: center;
             padding: 40px 20px;
+            background: linear-gradient(135deg, #fff8f0 0%, #f5f0ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Background Elements */
+        .floating-emoji {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.08;
+            animation: float 20s infinite linear;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg) translateX(0px); }
+            33% { transform: translateY(-30px) rotate(120deg) translateX(20px); }
+            66% { transform: translateY(20px) rotate(240deg) translateX(-20px); }
+            100% { transform: translateY(0px) rotate(360deg) translateX(0px); }
         }
         
         .landing-card {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 50px 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            max-width: 1000px;
+            border-radius: 24px;
+            padding: 60px 50px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.1);
+            max-width: 1100px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
         .landing-title {
-            font-size: 48px;
-            font-weight: 700;
+            font-size: 56px;
+            font-weight: 800;
             background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            text-align: center;
         }
         
         .landing-subtitle {
-            font-size: 20px;
+            font-size: 22px;
             color: #666;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            text-align: center;
         }
         
-        .feature-grid {
+        /* Background Story Section */
+        .background-story {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.05) 0%, rgba(255, 94, 98, 0.05) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border-left: 5px solid #ff9966;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .background-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ff9966' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            z-index: 0;
+        }
+        
+        .story-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .story-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ff5e62;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .story-title i {
+            font-size: 32px;
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .story-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        .story-points {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin: 40px 0;
+            margin-top: 30px;
+        }
+        
+        .story-point {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .story-point:hover {
+            border-color: #ff9966;
+            transform: translateY(-5px);
+        }
+        
+        .point-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .story-point:hover .point-icon {
+            transform: scale(1.2);
+        }
+        
+        .point-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .point-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Feature Section */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
         }
         
         .feature-card {
             background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             color: white;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 35px 25px;
+            border-radius: 18px;
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .feature-card:hover::before {
+            left: 100%;
         }
         
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 153, 102, 0.4);
         }
         
         .feature-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
         }
         
         .feature-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         
         .feature-desc {
-            font-size: 14px;
-            opacity: 0.9;
+            font-size: 15px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        
+        /* Interactive Emoji Animation */
+        .interactive-emoji {
+            font-size: 40px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: gentleFloat 3s ease-in-out infinite;
+        }
+        
+        .interactive-emoji:hover {
+            animation: dance 0.6s ease infinite alternate;
+            transform-origin: center bottom;
+        }
+        
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes dance {
+            0% { transform: rotate(-15deg) scale(1.1); }
+            100% { transform: rotate(15deg) scale(1.1); }
         }
         
         /* Auth Pages */
@@ -295,7 +488,7 @@
             gap: 10px;
         }
         
-        /* Mood Selection */
+        /* Mood Selection - Animasi Diperbarui */
         .mood-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -325,65 +518,81 @@
             background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
         }
         
-        /* Animasi Emoji Mood */
+        /* Enhanced Emoji Animation in Mood Selection */
         .mood-emoji {
             font-size: 40px;
             margin-bottom: 8px;
             display: inline-block;
             transition: all 0.5s ease;
             position: relative;
+            animation: gentleFloat 4s ease-in-out infinite;
         }
         
-        /* Animasi untuk setiap emoji */
+        /* Animasi khusus untuk setiap mood saat hover */
         .mood-item[data-mood="happy"]:hover .mood-emoji {
-            animation: bounce 0.6s ease infinite alternate;
+            animation: happyDance 0.6s ease infinite alternate;
             transform-origin: bottom;
         }
         
         .mood-item[data-mood="good"]:hover .mood-emoji {
-            animation: float 0.8s ease infinite alternate;
+            animation: goodVibe 0.8s ease infinite alternate;
         }
         
         .mood-item[data-mood="neutral"]:hover .mood-emoji {
-            animation: wobble 0.7s ease infinite alternate;
+            animation: neutralFloat 1s ease infinite alternate;
         }
         
         .mood-item[data-mood="sad"]:hover .mood-emoji {
-            animation: gentleBounce 0.9s ease infinite alternate;
+            animation: sadBounce 1.2s ease infinite alternate;
             transform-origin: bottom;
         }
         
         .mood-item[data-mood="stressed"]:hover .mood-emoji {
-            animation: shake 0.5s ease infinite alternate;
+            animation: stressedPulse 0.5s ease infinite alternate;
         }
         
-        /* Keyframes Animasi */
-        @keyframes bounce {
+        /* Animasi saat dipilih */
+        .mood-item.active .mood-emoji {
+            animation: selectedGlow 1s ease;
+        }
+        
+        /* Keyframes Animasi Baru */
+        @keyframes happyDance {
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-10px) rotate(-10deg) scale(1.1); }
+            75% { transform: translateY(-5px) rotate(10deg) scale(1.15); }
+            100% { transform: translateY(-10px) rotate(0deg) scale(1.1); }
+        }
+        
+        @keyframes goodVibe {
             0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-10px) scale(1.1); }
+            50% { transform: translateY(-8px) scale(1.1); }
+            100% { transform: translateY(0) scale(1.05); }
         }
         
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(5deg); }
-            100% { transform: translateY(-10px) rotate(-5deg); }
+        @keyframes neutralFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-5px) rotate(-5deg); }
+            66% { transform: translateY(-8px) rotate(5deg); }
         }
         
-        @keyframes wobble {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(5deg); }
-            75% { transform: rotate(-5deg); }
-        }
-        
-        @keyframes gentleBounce {
+        @keyframes sadBounce {
             0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-5px) scale(1.05); }
+            50% { transform: translateY(-3px) scale(0.95); }
+            100% { transform: translateY(0) scale(1); }
         }
         
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-2px); }
-            75% { transform: translateX(2px); }
+        @keyframes stressedPulse {
+            0%, 100% { transform: scale(1) translateX(0); }
+            25% { transform: scale(1.05) translateX(-2px); }
+            50% { transform: scale(1.1) translateX(0); }
+            75% { transform: scale(1.05) translateX(2px); }
+        }
+        
+        @keyframes selectedGlow {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.2); filter: brightness(1.2); }
+            100% { transform: scale(1.1); filter: brightness(1.1); }
         }
         
         /* Efek glow saat hover */
@@ -408,19 +617,6 @@
         .mood-emoji, .mood-label {
             position: relative;
             z-index: 1;
-        }
-        
-        /* Efek saat active/selected */
-        .mood-item.active .mood-emoji {
-            animation: happyDance 1s ease;
-        }
-        
-        @keyframes happyDance {
-            0% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.2) rotate(15deg); }
-            50% { transform: scale(1.1) rotate(-15deg); }
-            75% { transform: scale(1.2) rotate(15deg); }
-            100% { transform: scale(1) rotate(0deg); }
         }
         
         .mood-label {
@@ -684,135 +880,237 @@
         /* =========== DARK MODE =========== */
         
         body.dark-mode {
-            background: linear-gradient(135deg, #2d1b69 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #f0f0f0;
         }
         
+        /* Improved text contrast in dark mode */
+        body.dark-mode,
+        body.dark-mode .text-muted,
+        body.dark-mode .story-text,
+        body.dark-mode .point-desc,
+        body.dark-mode .quest-desc,
+        body.dark-mode .history-table td,
+        body.dark-mode .streak-label,
+        body.dark-mode .mood-label,
+        body.dark-mode .badge-name,
+        body.dark-mode .form-label,
+        body.dark-mode .form-check-label,
+        body.dark-mode small,
+        body.dark-mode .fw-semibold:not(.text-gradient) {
+            color: #e0e0e0 !important;
+        }
+        
+        /* Improved contrast for muted text */
+        body.dark-mode .text-muted {
+            color: #b0b0c0 !important;
+        }
+        
+        /* Improved card backgrounds with better contrast */
         body.dark-mode .landing-card,
         body.dark-mode .auth-card,
         body.dark-mode .navbar-custom,
         body.dark-mode .card-custom,
         body.dark-mode .streak-display,
         body.dark-mode .history-table th,
-        body.dark-mode .history-table td {
-            background: rgba(40, 35, 70, 0.95);
+        body.dark-mode .history-table td,
+        body.dark-mode .settings-panel {
+            background: rgba(30, 30, 46, 0.95);
             color: #f0f0f0;
-            border-color: #3a3466;
+            border-color: #444466;
         }
         
+        /* Improved background for story section */
+        body.dark-mode .background-story {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.08) 0%, rgba(255, 94, 98, 0.08) 100%);
+        }
+        
+        /* Improved story points in dark mode */
+        body.dark-mode .story-point {
+            background: rgba(40, 40, 60, 0.9);
+        }
+        
+        body.dark-mode .point-title {
+            color: #ffffff;
+        }
+        
+        /* Improved gradient text for dark mode */
         body.dark-mode .landing-title,
         body.dark-mode .auth-logo h2,
-        body.dark-mode .text-gradient {
-            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
+        body.dark-mode .text-gradient,
+        body.dark-mode .streak-number,
+        body.dark-mode .story-title i {
+            background: linear-gradient(135deg, #ff9966 0%, #ff8e8e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
+        /* Improved cards and buttons in dark mode */
         body.dark-mode .feature-card,
         body.dark-mode .motivational-message {
-            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             color: white;
         }
         
         body.dark-mode .btn-primary {
-            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
             border: none;
         }
         
         body.dark-mode .btn-primary:hover {
-            box-shadow: 0 5px 20px rgba(157, 78, 221, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 153, 102, 0.4);
         }
         
+        /* Improved form controls */
         body.dark-mode .form-control {
-            background-color: #3a3466;
-            border-color: #4a4477;
+            background-color: rgba(40, 40, 60, 0.8);
+            border-color: #555577;
             color: #f0f0f0;
         }
         
         body.dark-mode .form-control:focus {
-            background-color: #3a3466;
+            background-color: rgba(40, 40, 60, 0.9);
             border-color: #ff9966;
             color: #f0f0f0;
+            box-shadow: 0 0 0 0.2rem rgba(255, 153, 102, 0.25);
         }
         
-        body.dark-mode .text-muted {
-            color: #b8b5d0 !important;
+        body.dark-mode .form-control::placeholder {
+            color: #a0a0b0;
         }
         
+        /* Improved history table */
         body.dark-mode .history-table th {
             color: #ff9966;
         }
         
         body.dark-mode .history-table td {
-            color: #b8b5d0;
-            border-bottom-color: #4a4477;
+            color: #d0d0e0;
+            border-bottom-color: #444466;
         }
         
+        /* Improved mood items and quest cards */
         body.dark-mode .mood-item,
         body.dark-mode .quest-card,
         body.dark-mode .badge-item {
-            background: #3a3466;
-            border-color: #4a4477;
+            background: rgba(40, 40, 60, 0.8);
+            border-color: #555577;
         }
         
         body.dark-mode .mood-item:hover,
         body.dark-mode .quest-card:hover {
             border-color: #ff9966;
+            background: rgba(50, 50, 70, 0.9);
         }
         
         body.dark-mode .mood-item.active {
-            background: linear-gradient(135deg, rgba(255, 153, 102, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.2) 0%, rgba(255, 94, 98, 0.2) 100%);
             border-color: #ff9966;
         }
         
         body.dark-mode .mood-item::before {
-            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.15) 0%, rgba(255, 94, 98, 0.15) 100%);
         }
         
         body.dark-mode .quest-card.active {
-            background: linear-gradient(135deg, rgba(255, 153, 102, 0.2) 0%, rgba(157, 78, 221, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.25) 0%, rgba(255, 94, 98, 0.25) 100%);
             border-color: #ff9966;
         }
         
+        /* Improved timer circle */
         body.dark-mode .timer-circle {
-            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
-            box-shadow: 0 10px 40px rgba(157, 78, 221, 0.4);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+            box-shadow: 0 10px 40px rgba(255, 153, 102, 0.4);
             animation: pulseGlowDark 2s ease-in-out infinite alternate;
         }
         
         @keyframes pulseGlowDark {
-            0% { box-shadow: 0 10px 40px rgba(157, 78, 221, 0.4); }
-            100% { box-shadow: 0 10px 60px rgba(157, 78, 221, 0.6); }
+            0% { box-shadow: 0 10px 40px rgba(255, 153, 102, 0.4); }
+            100% { box-shadow: 0 10px 60px rgba(255, 153, 102, 0.6); }
         }
         
+        /* Improved progress bars */
         body.dark-mode .progress-custom {
-            background: #3a3466;
+            background: rgba(60, 60, 80, 0.5);
         }
         
         body.dark-mode .progress-bar-custom {
-            background: linear-gradient(135deg, #ff9966 0%, #9d4edd 100%);
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
         }
         
+        /* Improved streak display */
         body.dark-mode .streak-display {
-            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
         }
         
-        body.dark-mode .mood-label,
-        body.dark-mode .quest-desc,
-        body.dark-mode .card-title {
-            color: #f0f0f0;
+        /* Improved card titles and labels */
+        body.dark-mode .card-title,
+        body.dark-mode .point-title,
+        body.dark-mode .quest-title {
+            color: #ffffff;
         }
         
-        body.dark-mode .badge-name {
-            color: #f0f0f0;
+        body.dark-mode .quest-duration {
+            color: #ff9966;
         }
         
         body.dark-mode .mood-item:hover .mood-label {
             color: #ff9966;
         }
         
-        body.dark-mode .quest-duration {
+        /* Improved settings panel */
+        body.dark-mode .settings-item {
+            border-bottom-color: #444466;
+        }
+        
+        /* Improved theme toggle button */
+        body.dark-mode .theme-toggle-btn {
+            background: rgba(40, 40, 60, 0.8);
             color: #ff9966;
+            border: 1px solid #555577;
+        }
+        
+        body.dark-mode .theme-toggle-btn:hover {
+            background: rgba(50, 50, 70, 0.9);
+        }
+        
+        /* Improved form check */
+        body.dark-mode .form-check-input {
+            background-color: rgba(60, 60, 80, 0.8);
+            border-color: #555577;
+        }
+        
+        body.dark-mode .form-check-input:checked {
+            background-color: #ff9966;
+            border-color: #ff9966;
+        }
+        
+        /* Improved outline buttons */
+        body.dark-mode .btn-outline-primary,
+        body.dark-mode .btn-outline-secondary,
+        body.dark-mode .btn-outline-danger {
+            border-color: #555577;
+            color: #e0e0e0;
+        }
+        
+        body.dark-mode .btn-outline-primary:hover {
+            background: rgba(255, 153, 102, 0.1);
+            border-color: #ff9966;
+        }
+        
+        body.dark-mode .btn-outline-secondary:hover {
+            background: rgba(100, 100, 120, 0.2);
+            border-color: #777799;
+        }
+        
+        body.dark-mode .btn-outline-danger:hover {
+            background: rgba(220, 53, 69, 0.1);
+            border-color: #dc3545;
+        }
+        
+        /* Improved landing page subtitle */
+        body.dark-mode .landing-subtitle {
+            color: #c0c0d0;
         }
         
         /* Theme Toggle Button */
@@ -847,11 +1145,6 @@
         .theme-toggle-btn:hover {
             transform: rotate(30deg);
             background: rgba(255, 255, 255, 0.3);
-        }
-        
-        body.dark-mode .theme-toggle-btn {
-            background: rgba(40, 35, 70, 0.7);
-            color: #ff9966;
         }
         
         /* Streak Protection Indicator */
@@ -891,11 +1184,6 @@
             display: none;
         }
         
-        body.dark-mode .settings-panel {
-            background: #3a3466;
-            border: 1px solid #4a4477;
-        }
-        
         .settings-panel.show {
             display: block;
             animation: slideIn 0.3s ease;
@@ -919,16 +1207,6 @@
             margin-bottom: 15px;
             padding-bottom: 15px;
             border-bottom: 1px solid #eee;
-        }
-        
-        body.dark-mode .settings-item {
-            border-bottom-color: #4a4477;
-        }
-        
-        .settings-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
         }
         
         /* Theme Selection */
@@ -978,11 +1256,31 @@
         /* Responsive */
         @media (max-width: 768px) {
             .landing-title {
-                font-size: 32px;
+                font-size: 36px;
+            }
+            
+            .landing-subtitle {
+                font-size: 18px;
             }
             
             .landing-card {
                 padding: 30px 20px;
+            }
+            
+            .background-story {
+                padding: 25px;
+            }
+            
+            .story-title {
+                font-size: 24px;
+            }
+            
+            .story-text {
+                font-size: 16px;
+            }
+            
+            .story-points {
+                grid-template-columns: 1fr;
             }
             
             .feature-grid {
@@ -1028,18 +1326,73 @@
         .hidden {
             display: none !important;
         }
+        
+        /* Landing Page CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .btn-landing {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-landing:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Emoji Grid for Landing */
+        .emoji-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .emoji-item {
+            font-size: 48px;
+            animation: floatDelay 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .emoji-item:hover {
+            animation: bounceSpin 0.6s ease infinite alternate;
+        }
+        
+        @keyframes floatDelay {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes bounceSpin {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.2) rotate(20deg); }
+        }
+        
+        .emoji-item:nth-child(1) { animation-delay: 0s; }
+        .emoji-item:nth-child(2) { animation-delay: 0.2s; }
+        .emoji-item:nth-child(3) { animation-delay: 0.4s; }
+        .emoji-item:nth-child(4) { animation-delay: 0.6s; }
+        .emoji-item:nth-child(5) { animation-delay: 0.8s; }
     </style>
 </head>
 <body>
     
-    <!-- Loading Screen -->
+    <!-- Loading Screen - Diperbarui -->
     <div id="loadingScreen">
         <div class="loading-content">
             <div class="loading-spinner"></div>
             <div class="loading-text">VibeQuest</div>
             <div class="loading-narrative">
-                Memuat petualangan kesehatan mentalmu...<br>
-                Setiap quest adalah langkah menuju versi terbaik dirimu.
+                Membuka petualangan kesehatan mentalmu...
             </div>
         </div>
     </div>
@@ -1082,45 +1435,101 @@
         </div>
     </div>
     
-    <!-- Landing Page -->
+    <!-- Landing Page - Diperbarui -->
     <div id="landingPage" class="page-container">
         <div class="container">
             <div class="landing-card">
                 <div class="text-center">
                     <h1 class="landing-title">VibeQuest</h1>
-                    <p class="landing-subtitle">Bangun Kebiasaan Pengelolaan Suasana Hati dengan Sistem Komitmen & Gamifikasi</p>
+                    <p class="landing-subtitle">
+                        Transformasi kesehatan mentalmu melalui sistem gamifikasi yang menyenangkan.<br>
+                        Bangun kebiasaan positif dan raih versi terbaik dirimu.
+                    </p>
                 </div>
                 
+                <!-- Animated Emoji Grid -->
+                <div class="emoji-grid">
+                    <div class="emoji-item interactive-emoji">🧠</div>
+                    <div class="emoji-item interactive-emoji">💪</div>
+                    <div class="emoji-item interactive-emoji">🌟</div>
+                    <div class="emoji-item interactive-emoji">🔥</div>
+                    <div class="emoji-item interactive-emoji">🎯</div>
+                </div>
+                
+                <!-- Background Story Section -->
+                <div class="background-story">
+                    <div class="story-content">
+                        <h2 class="story-title">
+                            <i class="fas fa-history"></i>
+                            Latar Belakang Aplikasi
+                        </h2>
+                        
+                        <div class="story-text">
+                            <p>VibeQuest lahir dari kesadaran bahwa kesehatan mental adalah aset berharga yang perlu dijaga setiap hari. Di era digital yang penuh tekanan dan distraksi, banyak individu mengalami kesulitan menjaga keseimbangan emosi dan mental mereka.</p>
+                            
+                            <p>Berdasarkan penelitian, membangun kebiasaan kecil yang konsisten lebih efektif daripada perubahan besar yang tidak berkelanjutan. Namun, konsistensi adalah tantangan terbesar bagi kebanyakan orang.</p>
+                        </div>
+                        
+                        <div class="story-points">
+                            <div class="story-point">
+                                <div class="point-icon">🎯</div>
+                                <h4 class="point-title">Misi Kami</h4>
+                                <p class="point-desc">Membantu setiap individu membangun kebiasaan sehat untuk kesehatan mental melalui pendekatan yang menyenangkan dan berkelanjutan.</p>
+                            </div>
+                            
+                            <div class="story-point">
+                                <div class="point-icon">💡</div>
+                                <h4 class="point-title">Konsep Dasar</h4>
+                                <p class="point-desc">Menggabungkan prinsip psikologi positif, gamifikasi, dan behavioral science untuk menciptakan pengalaman yang efektif dan engaging.</p>
+                            </div>
+                            
+                            <div class="story-point">
+                                <div class="point-icon">🚀</div>
+                                <h4 class="point-title">Visi Ke Depan</h4>
+                                <p class="point-desc">Menjadi platform terdepan dalam membantu jutaan orang mencapai kesehatan mental optimal melalui kebiasaan sehari-hari.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Features Grid -->
                 <div class="feature-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
-                        <div class="feature-title">Daily Quest</div>
-                        <div class="feature-desc">Komitmen harian yang terstruktur untuk kesehatan mentalmu</div>
+                        <div class="feature-icon interactive-emoji">🎯</div>
+                        <div class="feature-title">Daily Quest Personal</div>
+                        <div class="feature-desc">Aktivitas harian yang disesuaikan dengan mood dan kebutuhanmu untuk hasil optimal</div>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🔥</div>
-                        <div class="feature-title">Streak System</div>
-                        <div class="feature-desc">Konsistensi adalah kunci - jaga streak-mu tetap menyala!</div>
+                        <div class="feature-icon interactive-emoji">🔥</div>
+                        <div class="feature-title">Sistem Streak Cerdas</div>
+                        <div class="feature-desc">Proteksi streak dan motivasi untuk tetap konsisten dalam perjalananmu</div>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">⭐</div>
-                        <div class="feature-title">Level & Rewards</div>
-                        <div class="feature-desc">Raih XP dan unlock fitur serta badge eksklusif</div>
+                        <div class="feature-icon interactive-emoji">📊</div>
+                        <div class="feature-title">Analisis Mendalam</div>
+                        <div class="feature-desc">Pantau perkembanganmu dengan data dan insight yang detail untuk pertumbuhan berkelanjutan</div>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <div class="feature-title">Progress Tracking</div>
-                        <div class="feature-desc">Pantau perjalanan dan perkembangan kesehatanmu</div>
+                        <div class="feature-icon interactive-emoji">🏆</div>
+                        <div class="feature-title">Achievement System</div>
+                        <div class="feature-desc">Kumpulkan badge dan naik level untuk membuka fitur eksklusif dan rewards</div>
                     </div>
                 </div>
                 
-                <div class="text-center mt-4">
-                    <button class="btn btn-primary btn-lg me-3" onclick="showPage('loginPage')">
-                        <i class="fas fa-sign-in-alt me-2"></i>Masuk
-                    </button>
-                    <button class="btn btn-outline-primary btn-lg" onclick="showPage('registerPage')">
-                        <i class="fas fa-user-plus me-2"></i>Daftar
-                    </button>
+                <!-- Call to Action -->
+                <div class="text-center">
+                    <p class="lead mb-4">Mulai perjalanan kesehatan mentalmu hari ini</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary btn-landing" onclick="showPage('loginPage')">
+                            <i class="fas fa-rocket me-2"></i>Mulai Sekarang
+                        </button>
+                        <button class="btn btn-outline-primary btn-landing" onclick="showDemo()">
+                            <i class="fas fa-play-circle me-2"></i>Lihat Demo
+                        </button>
+                    </div>
+                    <div class="mt-4">
+                        <small class="text-muted">Gratis selamanya • Privasi terjamin</small>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1563,18 +1972,54 @@
         // ========================
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Show loading screen
+            // Show loading screen dengan waktu lebih singkat dan center
             setTimeout(() => {
                 document.getElementById('loadingScreen').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('loadingScreen').style.display = 'none';
                     checkAutoLogin();
-                }, 500);
-            }, 2000);
+                }, 300);
+            }, 1000); // Loading 1 detik
+            
+            // Tambah floating emoji untuk landing page
+            createFloatingEmojis();
             
             // Initialize event listeners
             initializeEventListeners();
         });
+        
+        function createFloatingEmojis() {
+            const emojis = ['🧠', '💪', '🌟', '🎯', '🔥', '🌈', '💭', '✨', '😊', '🙂', '😐', '😔', '😰'];
+            const container = document.getElementById('landingPage');
+            
+            if (!container) return;
+            
+            for (let i = 0; i < 15; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'floating-emoji interactive-emoji';
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = `${Math.random() * 100}%`;
+                emoji.style.top = `${Math.random() * 100}%`;
+                emoji.style.animationDelay = `${Math.random() * 5}s`;
+                emoji.style.fontSize = `${Math.random() * 20 + 20}px`;
+                emoji.style.opacity = Math.random() * 0.1 + 0.05;
+                
+                // Tambah event listener untuk interaksi mouse
+                emoji.addEventListener('mouseenter', function() {
+                    this.style.animation = 'dance 0.6s ease infinite alternate';
+                    this.style.opacity = '0.3';
+                    this.style.transform = 'scale(1.5)';
+                });
+                
+                emoji.addEventListener('mouseleave', function() {
+                    this.style.animation = `float 20s infinite linear`;
+                    this.style.opacity = '0.08';
+                    this.style.transform = 'scale(1)';
+                });
+                
+                container.appendChild(emoji);
+            }
+        }
         
         function checkAutoLogin() {
             const savedSession = localStorage.getItem('vibequest_session');
@@ -1610,6 +2055,17 @@
                 item.addEventListener('click', handleMoodSelection);
             });
             
+            // Interactive emojis di landing page
+            document.querySelectorAll('.interactive-emoji').forEach(emoji => {
+                emoji.addEventListener('mouseenter', function() {
+                    this.style.animation = 'dance 0.6s ease infinite alternate';
+                });
+                
+                emoji.addEventListener('mouseleave', function() {
+                    this.style.animation = 'gentleFloat 3s ease-in-out infinite';
+                });
+            });
+            
             // Close settings panel when clicking outside
             document.addEventListener('click', function(event) {
                 const settingsPanel = document.getElementById('settingsPanel');
@@ -1621,6 +2077,37 @@
                     settingsPanel.classList.remove('show');
                 }
             });
+            
+            // Tambahkan animasi untuk mood emoji saat hover di dashboard
+            document.addEventListener('mouseover', function(event) {
+                const moodEmoji = event.target.closest('.mood-emoji');
+                if (moodEmoji && !moodEmoji.closest('.mood-item.active')) {
+                    const moodItem = moodEmoji.closest('.mood-item');
+                    if (moodItem) {
+                        const mood = moodItem.dataset.mood;
+                        // Trigger animasi sesuai mood
+                        moodEmoji.style.animation = getMoodHoverAnimation(mood);
+                    }
+                }
+            });
+            
+            document.addEventListener('mouseout', function(event) {
+                const moodEmoji = event.target.closest('.mood-emoji');
+                if (moodEmoji && !moodEmoji.closest('.mood-item.active')) {
+                    moodEmoji.style.animation = 'gentleFloat 4s ease-in-out infinite';
+                }
+            });
+        }
+        
+        function getMoodHoverAnimation(mood) {
+            const animations = {
+                happy: 'happyDance 0.6s ease infinite alternate',
+                good: 'goodVibe 0.8s ease infinite alternate',
+                neutral: 'neutralFloat 1s ease infinite alternate',
+                sad: 'sadBounce 1.2s ease infinite alternate',
+                stressed: 'stressedPulse 0.5s ease infinite alternate'
+            };
+            return animations[mood] || 'gentleFloat 4s ease-in-out infinite';
         }
         
         // ========================
@@ -1879,6 +2366,10 @@
             moodItem.classList.add('active');
             selectedMood = mood;
             
+            // Trigger selected animation
+            const emoji = moodItem.querySelector('.mood-emoji');
+            emoji.style.animation = 'selectedGlow 1s ease';
+            
             // Show quest section
             setTimeout(() => {
                 document.getElementById('moodSection').classList.add('hidden');
@@ -1910,7 +2401,7 @@
                 questCard.innerHTML = `
                     <div class="quest-header">
                         <div class="quest-title">
-                            <span>${quest.icon}</span>
+                            <span class="interactive-emoji">${quest.icon}</span>
                             <span>${quest.name}</span>
                         </div>
                         <div class="quest-xp">+${quest.xp} XP</div>
@@ -2277,6 +2768,44 @@
         }
         
         // ========================
+        // New Landing Page Functions
+        // ========================
+        
+        function showDemo() {
+            // Simulasi cepat demo
+            alert('🚀 Demo Mode: Lihat bagaimana VibeQuest bekerja!\n\n1. Pilih mood kamu\n2. Pilih quest yang sesuai\n3. Selesaikan quest dan dapatkan XP\n4. Tingkatkan level dan kumpulkan badge!');
+            
+            // Tampilkan carousel demo
+            const demoMessages = [
+                "🎯 Pilih quest berdasarkan mood harianmu",
+                "🔥 Pertahankan streak untuk bonus spesial",
+                "📊 Pantau perkembangan dengan analisis detail",
+                "🏆 Kumpulkan badge dan naik level!"
+            ];
+            
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < demoMessages.length) {
+                    updateMotivationalMessageDemo(demoMessages[i]);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 1500);
+        }
+        
+        function updateMotivationalMessageDemo(message) {
+            const messageDiv = document.getElementById('motivationalMessage') || document.querySelector('.motivational-message');
+            if (messageDiv) {
+                messageDiv.innerHTML = `<h4>✨ Demo Mode</h4><p>${message}</p>`;
+                messageDiv.style.animation = 'none';
+                setTimeout(() => {
+                    messageDiv.style.animation = 'slideUp 0.5s ease';
+                }, 10);
+            }
+        }
+        
+        // ========================
         // Utility Functions
         // ========================
         
@@ -2291,6 +2820,15 @@
             setTimeout(() => {
                 targetPage.classList.remove('hidden');
             }, 10);
+            
+            // Refresh floating emojis untuk landing page
+            if (pageId === 'landingPage') {
+                setTimeout(() => {
+                    const existing = document.querySelectorAll('.floating-emoji');
+                    existing.forEach(e => e.remove());
+                    createFloatingEmojis();
+                }, 100);
+            }
         }
         
         function getUsers() {
