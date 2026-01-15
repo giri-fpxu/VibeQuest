@@ -1177,7 +1177,887 @@
         // Rest of your JavaScript code remains the same...
         // [Your existing JavaScript code continues here]
         // I've kept all your existing JavaScript functionality
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ========================
+        // Global Variables
+        // ========================
         
+        let currentUser = null;
+        let selectedMood = null;
+        let selectedQuest = null;
+        let timerInterval = null;
+        let timerSeconds = 0;
+        let currentTheme = 'light';
+        
+        // Quest Database
+        const quests = [
+            {
+                id: 1,
+                name: "Meditasi Mindfulness",
+                icon: "🧘",
+                description: "10 menit meditasi untuk menenangkan pikiran",
+                duration: 600, // 10 minutes in seconds
+                xp: 50,
+                type: "relaxation"
+            },
+            {
+                id: 2,
+                name: "Journaling Emosi",
+                icon: "📝",
+                description: "Tulis 5 hal yang kamu syukuri hari ini",
+                duration: 900, // 15 minutes
+                xp: 60,
+                type: "reflection"
+            },
+            {
+                id: 3,
+                name: "Latihan Pernapasan",
+                icon: "🌬️",
+                description: "5 menit teknik pernapasan dalam",
+                duration: 300, // 5 minutes
+                xp: 30,
+                type: "breathing"
+            },
+            {
+                id: 4,
+                name: "Olahraga Ringan",
+                icon: "🏃",
+                description: "20 menit aktivitas fisik ringan",
+                duration: 1200, // 20 minutes
+                xp: 80,
+                type: "exercise"
+            },
+            {
+                id: 5,
+                name: "Musik Relaksasi",
+                icon: "🎵",
+                description: "Dengarkan musik menenangkan 15 menit",
+                duration: 900, // 15 minutes
+                xp: 40,
+                type: "relaxation"
+            },
+            {
+                id: 6,
+                name: "Baca Buku Inspiratif",
+                icon: "📚",
+                description: "Membaca buku pengembangan diri 30 menit",
+                duration: 1800, // 30 minutes
+                xp: 100,
+                type: "learning"
+            },
+            {
+                id: 7,
+                name: "Koneksi Sosial",
+                icon: "💬",
+                description: "Berbicara dengan teman atau keluarga",
+                duration: 1200, // 20 minutes
+                xp: 70,
+                type: "social"
+            },
+            {
+                id: 8,
+                name: "Aktivitas Kreatif",
+                icon: "🎨",
+                description: "Ekspresikan diri lewat seni atau hobi",
+                duration: 1800, // 30 minutes
+                xp: 90,
+                type: "creative"
+            }
+        ];
+        
+        // Badge System
+        const badges = [
+            { id: 1, name: "Pemula", icon: "🌱", requirement: 1, type: "streak" },
+            { id: 2, name: "Konsisten", icon: "💪", requirement: 7, type: "streak" },
+            { id: 3, name: "Dedikasi", icon: "🔥", requirement: 30, type: "streak" },
+            { id: 4, name: "Quest Master", icon: "⭐", requirement: 50, type: "quests" },
+            { id: 5, name: "Level 10", icon: "🏆", requirement: 10, type: "level" },
+            { id: 6, name: "Explorer", icon: "🗺️", requirement: 5, type: "variety" }
+        ];
+        
+        // Motivational messages based on mood and completion
+        const motivationalMessages = {
+            happy: {
+                start: "Energi positifmu luar biasa! Mari pertahankan dengan quest hari ini.",
+                complete: "Sempurna! Kamu berhasil menjaga energi positifmu. Terus begini ya!"
+            },
+            good: {
+                start: "Mood yang baik adalah awal yang bagus! Yuk tingkatkan lagi dengan quest.",
+                complete: "Hebat! Kamu semakin konsisten dalam menjaga kesehatan mentalmu."
+            },
+            neutral: {
+                start: "Tidak apa-apa merasa biasa saja. Quest ini bisa membantumu merasa lebih baik.",
+                complete: "Lihat? Kamu bisa melakukannya! Konsistensi kecil membawa perubahan besar."
+            },
+            sad: {
+                start: "Aku tahu ini berat, tapi kamu tidak sendiri. Mari ambil langkah kecil bersama.",
+                complete: "Kamu sangat kuat! Bahkan di hari sulit, kamu tetap berkomitmen pada dirimu."
+            },
+            stressed: {
+                start: "Stres itu wajar. Quest ini dirancang khusus untuk membantumu merasa lebih tenang.",
+                complete: "Luar biasa! Kamu berhasil mengelola stresmu dengan baik. Bangga padamu!"
+            }
+        };
+        
+        // ========================
+        // Initialization
+        // ========================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show loading screen
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    checkAutoLogin();
+                }, 500);
+            }, 2000);
+            
+            // Initialize event listeners
+            initializeEventListeners();
+        });
+        
+        function checkAutoLogin() {
+            const savedSession = localStorage.getItem('vibequest_session');
+            if (savedSession) {
+                const session = JSON.parse(savedSession);
+                const users = getUsers();
+                const user = users.find(u => u.email === session.email);
+                
+                if (user) {
+                    currentUser = user;
+                    showPage('dashboardPage');
+                    loadDashboard();
+                    return;
+                }
+            }
+            
+            showPage('landingPage');
+        }
+        
+        // ========================
+        // Event Listeners
+        // ========================
+        
+        function initializeEventListeners() {
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            
+            // Register form
+            document.getElementById('registerForm').addEventListener('submit', handleRegister);
+            
+            // Mood selection
+            document.querySelectorAll('.mood-item').forEach(item => {
+                item.addEventListener('click', handleMoodSelection);
+            });
+            
+            // Close settings panel when clicking outside
+            document.addEventListener('click', function(event) {
+                const settingsPanel = document.getElementById('settingsPanel');
+                const themeToggle = document.querySelector('.theme-toggle-btn');
+                
+                if (settingsPanel && settingsPanel.classList.contains('show') && 
+                    !settingsPanel.contains(event.target) && 
+                    themeToggle && !themeToggle.contains(event.target)) {
+                    settingsPanel.classList.remove('show');
+                }
+            });
+        }
+        
+        // ========================
+        // Authentication Functions
+        // ========================
+        
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            
+            // Validate email
+            if (!isValidEmail(email)) {
+                alert('Email tidak valid!');
+                return;
+            }
+            
+            // Validate password
+            if (password.length < 6) {
+                alert('Password minimal 6 karakter!');
+                return;
+            }
+            
+            // Check if user exists
+            const users = getUsers();
+            if (users.find(u => u.email === email)) {
+                alert('Email sudah terdaftar!');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: btoa(password), // Simple encoding
+                xp: 0,
+                level: 1,
+                streak: 0,
+                lastQuestDate: null,
+                questsCompleted: [],
+                moodHistory: [],
+                streakProtection: 3, // Reset ke 3 setiap bulan
+                streakProtectionUsedThisMonth: 0,
+                streakProtectionMonth: new Date().getMonth(),
+                badges: [],
+                createdAt: new Date().toISOString(),
+                theme: 'light'
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('vibequest_users', JSON.stringify(users));
+            
+            alert('Pendaftaran berhasil! Silakan login.');
+            showPage('loginPage');
+            
+            // Reset form
+            document.getElementById('registerForm').reset();
+        }
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            const users = getUsers();
+            const user = users.find(u => u.email === email && u.password === btoa(password));
+            
+            if (!user) {
+                alert('Email atau password salah!');
+                return;
+            }
+            
+            currentUser = user;
+            
+            // Save session if remember me is checked
+            if (rememberMe) {
+                localStorage.setItem('vibequest_session', JSON.stringify({ email: email }));
+            }
+            
+            showPage('dashboardPage');
+            loadDashboard();
+            
+            // Reset form
+            document.getElementById('loginForm').reset();
+        }
+        
+        function logout() {
+            if (confirm('Yakin ingin keluar?')) {
+                currentUser = null;
+                localStorage.removeItem('vibequest_session');
+                showPage('landingPage');
+                
+                // Reset dashboard
+                resetDailyQuest();
+            }
+        }
+        
+        // ========================
+        // Dashboard Functions
+        // ========================
+        
+        function loadDashboard() {
+            // Update user info
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            
+            // Load user theme
+            currentTheme = currentUser.theme || 'light';
+            applyTheme(currentTheme);
+            
+            // Check streak
+            checkAndUpdateStreak();
+            
+            // Update all displays
+            updateUserStats();
+            updateBadges();
+            updateHistory();
+            updateStreakProtectionDisplay();
+            
+            // Check if quest already completed today
+            updateMotivationalMessage('start');
+        }
+        
+        function updateUserStats() {
+            const level = calculateLevel(currentUser.xp);
+            const xpForCurrentLevel = getXPForLevel(level);
+            const xpForNextLevel = getXPForLevel(level + 1);
+            const xpProgress = currentUser.xp - xpForCurrentLevel;
+            const xpNeeded = xpForNextLevel - xpForCurrentLevel;
+            const progressPercent = (xpProgress / xpNeeded) * 100;
+            
+            currentUser.level = level;
+            
+            document.getElementById('userLevel').textContent = `Level ${level}`;
+            document.getElementById('userXP').textContent = `${currentUser.xp} XP`;
+            document.getElementById('userStreak').textContent = `${currentUser.streak} days`;
+            document.getElementById('userProtection').textContent = currentUser.streakProtection;
+            document.getElementById('streakNumber').textContent = currentUser.streak;
+            
+            // Update progress bar
+            document.getElementById('currentLevel').textContent = level;
+            document.getElementById('currentXP').textContent = xpProgress;
+            document.getElementById('nextLevelXP').textContent = xpNeeded;
+            document.getElementById('xpProgressBar').style.width = `${progressPercent}%`;
+            document.getElementById('xpProgressBar').textContent = `${Math.round(progressPercent)}%`;
+            
+            // Update statistics
+            document.getElementById('totalQuestsCompleted').textContent = currentUser.questsCompleted.length;
+            
+            // Today's quests
+            const today = new Date().toDateString();
+            const todaysQuests = currentUser.questsCompleted.filter(q => new Date(q.date).toDateString() === today);
+            document.getElementById('todaysQuests').textContent = todaysQuests.length;
+            
+            // Consistency rate
+            const daysSinceJoined = Math.floor((new Date() - new Date(currentUser.createdAt)) / (1000 * 60 * 60 * 24)) + 1;
+            const consistencyRate = Math.round((currentUser.questsCompleted.length / daysSinceJoined) * 100);
+            document.getElementById('consistencyRate').textContent = `${consistencyRate}%`;
+            
+            saveUserData();
+        }
+        
+        function updateBadges() {
+            const badgeGrid = document.getElementById('badgeGrid');
+            badgeGrid.innerHTML = '';
+            
+            badges.forEach(badge => {
+                const isUnlocked = checkBadgeUnlocked(badge);
+                const badgeDiv = document.createElement('div');
+                badgeDiv.className = `badge-item ${isUnlocked ? '' : 'locked'}`;
+                badgeDiv.innerHTML = `
+                    <div class="badge-icon">${badge.icon}</div>
+                    <div class="badge-name">${badge.name}</div>
+                `;
+                badgeGrid.appendChild(badgeDiv);
+                
+                // Add badge to user if newly unlocked
+                if (isUnlocked && !currentUser.badges.includes(badge.id)) {
+                    currentUser.badges.push(badge.id);
+                    showBadgeUnlockNotification(badge);
+                }
+            });
+        }
+        
+        function checkBadgeUnlocked(badge) {
+            switch (badge.type) {
+                case 'streak':
+                    return currentUser.streak >= badge.requirement;
+                case 'quests':
+                    return currentUser.questsCompleted.length >= badge.requirement;
+                case 'level':
+                    return currentUser.level >= badge.requirement;
+                case 'variety':
+                    const uniqueQuests = new Set(currentUser.questsCompleted.map(q => q.questId));
+                    return uniqueQuests.size >= badge.requirement;
+                default:
+                    return false;
+            }
+        }
+        
+        function showBadgeUnlockNotification(badge) {
+            alert(`🎉 Badge Baru: ${badge.icon} ${badge.name}!`);
+        }
+        
+        function updateHistory() {
+            const tableBody = document.getElementById('historyTableBody');
+            
+            if (currentUser.questsCompleted.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Belum ada riwayat</td></tr>';
+                return;
+            }
+            
+            // Show last 10 quests
+            const recentQuests = [...currentUser.questsCompleted].reverse().slice(0, 10);
+            
+            tableBody.innerHTML = recentQuests.map(quest => {
+                const questData = quests.find(q => q.id === quest.questId);
+                const date = new Date(quest.date).toLocaleDateString('id-ID', { 
+                    day: 'numeric', 
+                    month: 'short',
+                    year: 'numeric'
+                });
+                const moodEmoji = getMoodEmoji(quest.mood);
+                
+                return `
+                    <tr>
+                        <td>${date}</td>
+                        <td>${moodEmoji}</td>
+                        <td>${questData ? questData.name : 'Unknown'}</td>
+                        <td><span class="badge bg-success">Selesai</span></td>
+                        <td>+${quest.xp} XP</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // ========================
+        // Mood Selection
+        // ========================
+        
+        function handleMoodSelection(e) {
+            const moodItem = e.currentTarget;
+            const mood = moodItem.dataset.mood;
+            
+            // Remove active from all
+            document.querySelectorAll('.mood-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active to selected
+            moodItem.classList.add('active');
+            selectedMood = mood;
+            
+            // Show quest section
+            setTimeout(() => {
+                document.getElementById('moodSection').classList.add('hidden');
+                document.getElementById('questSection').classList.remove('hidden');
+                populateQuests(mood);
+                updateMotivationalMessage('start', mood);
+            }, 300);
+        }
+        
+        function populateQuests(mood) {
+            const questList = document.getElementById('questList');
+            questList.innerHTML = '';
+            
+            // Filter quests based on mood (you can customize this logic)
+            let recommendedQuests = [...quests];
+            
+            if (mood === 'stressed' || mood === 'sad') {
+                // Prioritize relaxation and breathing exercises
+                recommendedQuests.sort((a, b) => {
+                    const priority = { relaxation: 1, breathing: 2, reflection: 3 };
+                    return (priority[a.type] || 10) - (priority[b.type] || 10);
+                });
+            }
+            
+            recommendedQuests.forEach(quest => {
+                const questCard = document.createElement('div');
+                questCard.className = 'quest-card';
+                questCard.dataset.questId = quest.id;
+                questCard.innerHTML = `
+                    <div class="quest-header">
+                        <div class="quest-title">
+                            <span>${quest.icon}</span>
+                            <span>${quest.name}</span>
+                        </div>
+                        <div class="quest-xp">+${quest.xp} XP</div>
+                    </div>
+                    <div class="quest-desc">${quest.description}</div>
+                    <div class="quest-duration">
+                        <i class="fas fa-clock me-1"></i>
+                        ${Math.floor(quest.duration / 60)} menit
+                    </div>
+                `;
+                
+                questCard.addEventListener('click', function() {
+                    document.querySelectorAll('.quest-card').forEach(card => {
+                        card.classList.remove('active');
+                    });
+                    questCard.classList.add('active');
+                    selectedQuest = quest;
+                });
+                
+                questList.appendChild(questCard);
+            });
+        }
+        
+        function getMoodEmoji(mood) {
+            const emojis = {
+                happy: '😊',
+                good: '🙂',
+                neutral: '😐',
+                sad: '😔',
+                stressed: '😰'
+            };
+            return emojis[mood] || '😐';
+        }
+        
+        // ========================
+        // Quest Management
+        // ========================
+        
+        function startQuest() {
+            if (!selectedQuest) {
+                alert('Pilih quest terlebih dahulu!');
+                return;
+            }
+            
+            // Hide quest section, show timer
+            document.getElementById('questSection').classList.add('hidden');
+            document.getElementById('timerSection').classList.remove('hidden');
+            
+            // Set quest name
+            document.getElementById('activeQuestName').textContent = selectedQuest.name;
+            
+            // Start timer
+            timerSeconds = selectedQuest.duration;
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                updateTimerDisplay();
+                
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    // Auto-complete when timer ends
+                    completeQuest();
+                }
+            }, 1000);
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+        
+        function completeQuest() {
+            clearInterval(timerInterval);
+            
+            // Check if this is the first quest today for streak calculation
+            const today = new Date().toDateString();
+            const lastQuestDate = currentUser.lastQuestDate ? new Date(currentUser.lastQuestDate).toDateString() : null;
+            
+            // Update streak hanya jika ini adalah quest pertama hari ini
+            if (lastQuestDate !== today) {
+                // Jika quest terakhir bukan kemarin, reset streak
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayString = yesterday.toDateString();
+                
+                if (lastQuestDate !== yesterdayString && lastQuestDate !== null) {
+                    // Jika melewatkan hari, cek proteksi streak
+                    checkAndUpdateStreak();
+                }
+                
+                // Tambah streak untuk hari ini
+                currentUser.streak++;
+                currentUser.lastQuestDate = today;
+            }
+            
+            // Add quest to completed
+            const questCompletion = {
+                questId: selectedQuest.id,
+                mood: selectedMood,
+                date: new Date().toISOString(),
+                xp: selectedQuest.xp,
+                completed: true
+            };
+            
+            currentUser.questsCompleted.push(questCompletion);
+            currentUser.xp += selectedQuest.xp;
+            
+            // Add mood to history
+            currentUser.moodHistory.push({
+                mood: selectedMood,
+                date: new Date().toISOString()
+            });
+            
+            saveUserData();
+            showCompletionScreen();
+        }
+        
+        function cancelQuest() {
+            if (confirm('Yakin ingin membatalkan quest?')) {
+                clearInterval(timerInterval);
+                goToQuestSelection();
+            }
+        }
+        
+        function showCompletionScreen() {
+            document.getElementById('timerSection').classList.add('hidden');
+            document.getElementById('completionSection').classList.remove('hidden');
+            
+            // Update completion message
+            const message = motivationalMessages[selectedMood]?.complete || 
+                           'Hebat! Kamu berhasil menyelesaikan quest hari ini!';
+            document.getElementById('completionMessage').textContent = message;
+            document.getElementById('earnedXP').textContent = `+${selectedQuest.xp}`;
+            document.getElementById('currentStreakDisplay').textContent = `${currentUser.streak} 🔥`;
+            
+            // Update dashboard stats
+            updateUserStats();
+            updateBadges();
+            updateHistory();
+            
+            // Show level up if applicable
+            checkLevelUp();
+        }
+        
+        function checkLevelUp() {
+            const newLevel = calculateLevel(currentUser.xp);
+            if (newLevel > currentUser.level) {
+                setTimeout(() => {
+                    alert(`🎊 LEVEL UP! Kamu sekarang Level ${newLevel}!`);
+                    if (newLevel % 5 === 0) {
+                        currentUser.streakProtection++;
+                        alert(`🛡️ Bonus: +1 Streak Protection! Total: ${currentUser.streakProtection}`);
+                        updateStreakProtectionDisplay();
+                    }
+                }, 500);
+            }
+        }
+        
+        function goToQuestSelection() {
+            selectedQuest = null;
+            document.getElementById('timerSection').classList.add('hidden');
+            document.getElementById('completionSection').classList.add('hidden');
+            document.getElementById('questSection').classList.remove('hidden');
+            
+            // Reset quest selection
+            document.querySelectorAll('.quest-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            updateUserStats();
+        }
+        
+        function backToMoodSelection() {
+            selectedMood = null;
+            selectedQuest = null;
+            
+            document.getElementById('questSection').classList.add('hidden');
+            document.getElementById('moodSection').classList.remove('hidden');
+            
+            // Reset mood selection
+            document.querySelectorAll('.mood-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+        
+        function resetToMoodSelection() {
+            selectedMood = null;
+            selectedQuest = null;
+            
+            document.getElementById('completionSection').classList.add('hidden');
+            document.getElementById('moodSection').classList.remove('hidden');
+            
+            // Reset mood selection
+            document.querySelectorAll('.mood-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            updateUserStats();
+        }
+        
+        function resetDailyQuest() {
+            selectedMood = null;
+            selectedQuest = null;
+            
+            document.getElementById('moodSection').classList.remove('hidden');
+            document.getElementById('questSection').classList.add('hidden');
+            document.getElementById('timerSection').classList.add('hidden');
+            document.getElementById('completionSection').classList.add('hidden');
+            
+            // Reset mood selection
+            document.querySelectorAll('.mood-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            updateUserStats();
+        }
+        
+        function updateMotivationalMessage(type, mood = null) {
+            const messageDiv = document.getElementById('motivationalMessage');
+            const moodToUse = mood || selectedMood || 'neutral';
+            
+            // Count today's quests
+            const today = new Date().toDateString();
+            const todaysQuests = currentUser.questsCompleted.filter(q => new Date(q.date).toDateString() === today);
+            
+            if (todaysQuests.length > 0) {
+                messageDiv.innerHTML = `<h4>🎯 ${todaysQuests.length} Quest Selesai Hari Ini!</h4><p>Mau coba quest lainnya?</p>`;
+            } else if (type === 'start' && motivationalMessages[moodToUse]) {
+                const message = motivationalMessages[moodToUse].start;
+                messageDiv.innerHTML = `<h4>💪 ${message.split('.')[0]}</h4><p>${message}</p>`;
+            } else {
+                messageDiv.innerHTML = `<h4>🌟 Selamat datang!</h4><p>Mari mulai hari ini dengan komitmen untuk dirimu sendiri.</p>`;
+            }
+        }
+        
+        // ========================
+        // Streak Management (Updated)
+        // ========================
+        
+        function checkAndUpdateStreak() {
+            if (!currentUser.lastQuestDate) {
+                return;
+            }
+            
+            // Check if streak protection needs to be reset for new month
+            checkStreakProtectionReset();
+            
+            const lastDate = new Date(currentUser.lastQuestDate);
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            const lastDateString = lastDate.toDateString();
+            const todayString = today.toDateString();
+            const yesterdayString = yesterday.toDateString();
+            
+            // Jika quest terakhir adalah kemarin, streak tetap
+            if (lastDateString === yesterdayString) {
+                return;
+            }
+            
+            // Jika quest terakhir lebih dari kemarin, streak direset
+            if (lastDateString !== todayString && lastDateString !== yesterdayString) {
+                resetStreak();
+            }
+        }
+        
+        function resetStreak() {
+            // Check if user has streak protection available
+            if (currentUser.streakProtection > 0 && currentUser.streakProtectionUsedThisMonth < 3) {
+                currentUser.streakProtection--;
+                currentUser.streakProtectionUsedThisMonth++;
+                alert(`🛡️ Streak Protection digunakan! Streak kamu tetap ${currentUser.streak}. Streak Protection tersisa: ${currentUser.streakProtection}`);
+                updateStreakProtectionDisplay();
+                saveUserData();
+            } else {
+                // Reset streak jika tidak ada proteksi
+                const lostStreak = currentUser.streak;
+                currentUser.streak = 0;
+                currentUser.lastQuestDate = null;
+                alert(`💔 Streak kamu (${lostStreak} hari) telah padam karena tidak menyelesaikan quest.`);
+                saveUserData();
+            }
+        }
+        
+        function checkStreakProtectionReset() {
+            const currentMonth = new Date().getMonth();
+            
+            // Jika bulan baru, reset streak protection
+            if (currentMonth !== currentUser.streakProtectionMonth) {
+                currentUser.streakProtection = 3;
+                currentUser.streakProtectionUsedThisMonth = 0;
+                currentUser.streakProtectionMonth = currentMonth;
+                updateStreakProtectionDisplay();
+                saveUserData();
+            }
+        }
+        
+        function updateStreakProtectionDisplay() {
+            const protectionCount = document.getElementById('streakProtectionCount');
+            const protectionStatus = document.getElementById('streakProtectionStatus');
+            
+            if (protectionCount) {
+                protectionCount.innerHTML = `<i class="fas fa-shield-alt"></i> ${currentUser.streakProtection}`;
+            }
+            
+            if (protectionStatus) {
+                const used = currentUser.streakProtectionUsedThisMonth || 0;
+                const remaining = 3 - used;
+                protectionStatus.textContent = `${remaining}x tersisa bulan ini`;
+            }
+        }
+        
+        // ========================
+        // Theme Management Functions
+        // ========================
+        
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('show');
+        }
+        
+        function changeTheme(theme) {
+            currentTheme = theme;
+            currentUser.theme = theme;
+            saveUserData();
+            applyTheme(theme);
+            
+            // Update active theme button
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.theme-option[data-theme="${theme}"]`).classList.add('active');
+            
+            // Close settings panel
+            document.getElementById('settingsPanel').classList.remove('show');
+        }
+        
+        function applyTheme(theme) {
+            // Remove all theme classes
+            document.body.classList.remove('dark-mode');
+            
+            // Add new theme class
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        }
+        
+        // ========================
+        // Level System
+        // ========================
+        
+        function calculateLevel(xp) {
+            // Level formula: Level = floor(sqrt(XP / 50)) + 1
+            return Math.floor(Math.sqrt(xp / 50)) + 1;
+        }
+        
+        function getXPForLevel(level) {
+            // Inverse of level formula
+            return Math.pow(level - 1, 2) * 50;
+        }
+        
+        // ========================
+        // Utility Functions
+        // ========================
+        
+        function showPage(pageId) {
+            document.querySelectorAll('.page-container').forEach(page => {
+                page.classList.add('hidden');
+                page.style.display = 'none';
+            });
+            
+            const targetPage = document.getElementById(pageId);
+            targetPage.style.display = 'block';
+            setTimeout(() => {
+                targetPage.classList.remove('hidden');
+            }, 10);
+        }
+        
+        function getUsers() {
+            const users = localStorage.getItem('vibequest_users');
+            return users ? JSON.parse(users) : [];
+        }
+        
+        function saveUserData() {
+            const users = getUsers();
+            const index = users.findIndex(u => u.id === currentUser.id);
+            
+            if (index !== -1) {
+                users[index] = currentUser;
+                localStorage.setItem('vibequest_users', JSON.stringify(users));
+            }
+            
+            // Update streak protection display
+            updateStreakProtectionDisplay();
+        }
+        
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
     </script>
 </body>
 </html>
