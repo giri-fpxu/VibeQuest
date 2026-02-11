@@ -644,6 +644,7 @@
             border: 2px solid transparent;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
         }
         
         .quest-card:hover {
@@ -690,6 +691,25 @@
             font-size: 13px;
             color: #ff9966;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Quest Detail Button */
+        .quest-detail-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: #ff9966;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .quest-detail-btn:hover {
+            transform: scale(1.2);
         }
         
         /* Timer */
@@ -877,6 +897,270 @@
             opacity: 0.95;
         }
         
+        /* Quest Detail Modal */
+        .quest-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quest-detail-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .quest-detail-header {
+            padding: 25px 30px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .quest-detail-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quest-detail-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .quest-detail-close:hover {
+            color: #ff5e62;
+        }
+        
+        .quest-detail-body {
+            padding: 20px 30px;
+        }
+        
+        .quest-detail-section {
+            margin-bottom: 25px;
+        }
+        
+        .quest-detail-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ff9966;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quest-detail-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .quest-detail-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .step-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .quest-benefits {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .benefit-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .benefit-icon {
+            color: #ff9966;
+        }
+        
+        /* Quest Detail Stats */
+        .quest-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .quest-stat {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .quest-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff9966;
+            margin-bottom: 5px;
+        }
+        
+        .quest-stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Modal Footer */
+        .quest-detail-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        
+        /* Quest Steps Styles (Baru) */
+        .quest-steps-container {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.05) 0%, rgba(255, 94, 98, 0.05) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 153, 102, 0.2);
+        }
+        
+        .quest-steps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .quest-step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #ff9966;
+            transition: transform 0.3s ease;
+        }
+        
+        .quest-step-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+        
+        .step-indicator {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .step-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Animasi untuk step yang aktif */
+        .quest-step-item.active-step {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
+            border-left: 4px solid #ff5e62;
+            transform: scale(1.02);
+        }
+        
+        /* Animasi untuk step yang selesai */
+        .quest-step-item.completed-step {
+            opacity: 0.7;
+        }
+        
+        .quest-step-item.completed-step .step-indicator {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+        }
+        
+        .quest-step-item.completed-step .step-indicator::after {
+            content: "✓";
+            font-size: 16px;
+        }
+        
         /* =========== DARK MODE =========== */
         
         body.dark-mode {
@@ -914,7 +1198,8 @@
         body.dark-mode .streak-display,
         body.dark-mode .history-table th,
         body.dark-mode .history-table td,
-        body.dark-mode .settings-panel {
+        body.dark-mode .settings-panel,
+        body.dark-mode .quest-detail-content {
             background: rgba(30, 30, 46, 0.95);
             color: #f0f0f0;
             border-color: #444466;
@@ -992,7 +1277,8 @@
         /* Improved mood items and quest cards */
         body.dark-mode .mood-item,
         body.dark-mode .quest-card,
-        body.dark-mode .badge-item {
+        body.dark-mode .badge-item,
+        body.dark-mode .quest-stat {
             background: rgba(40, 40, 60, 0.8);
             border-color: #555577;
         }
@@ -1046,7 +1332,8 @@
         /* Improved card titles and labels */
         body.dark-mode .card-title,
         body.dark-mode .point-title,
-        body.dark-mode .quest-title {
+        body.dark-mode .quest-title,
+        body.dark-mode .step-title {
             color: #ffffff;
         }
         
@@ -1111,6 +1398,59 @@
         /* Improved landing page subtitle */
         body.dark-mode .landing-subtitle {
             color: #c0c0d0;
+        }
+        
+        /* Improved quest detail modal */
+        body.dark-mode .quest-detail-header,
+        body.dark-mode .quest-detail-footer {
+            border-color: #444466;
+        }
+        
+        body.dark-mode .quest-detail-section-title {
+            color: #ff9966;
+        }
+        
+        body.dark-mode .quest-detail-step {
+            border-color: #444466;
+        }
+        
+        body.dark-mode .step-title {
+            color: #ffffff;
+        }
+        
+        body.dark-mode .step-desc {
+            color: #b0b0c0;
+        }
+        
+        body.dark-mode .quest-benefits {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.15) 0%, rgba(255, 94, 98, 0.15) 100%);
+        }
+        
+        body.dark-mode .quest-stat {
+            background: rgba(40, 40, 60, 0.8);
+        }
+        
+        /* Improved quest steps container for dark mode */
+        body.dark-mode .quest-steps-container {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.1) 0%, rgba(255, 94, 98, 0.1) 100%);
+            border-color: #555577;
+        }
+        
+        body.dark-mode .quest-step-item {
+            background: rgba(40, 40, 60, 0.9);
+        }
+        
+        body.dark-mode .step-title {
+            color: #ffffff;
+        }
+        
+        body.dark-mode .step-desc {
+            color: #b0b0c0;
+        }
+        
+        body.dark-mode .quest-step-item.active-step {
+            background: linear-gradient(135deg, rgba(255, 153, 102, 0.2) 0%, rgba(255, 94, 98, 0.2) 100%);
+            border-left: 4px solid #ff9966;
         }
         
         /* Theme Toggle Button */
@@ -1314,6 +1654,25 @@
             .quest-actions {
                 flex-direction: column;
             }
+            
+            .quest-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .quest-detail-content {
+                width: 95%;
+                max-height: 85vh;
+            }
+            
+            .quest-step-item {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .step-indicator {
+                margin: 0 auto;
+            }
         }
         
         /* Utility Classes */
@@ -1431,6 +1790,69 @@
             </div>
             <div class="streak-protection-badge" id="streakProtectionCount">
                 <i class="fas fa-shield-alt"></i> 3
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quest Detail Modal -->
+    <div class="quest-detail-modal" id="questDetailModal">
+        <div class="quest-detail-content">
+            <div class="quest-detail-header">
+                <h2 class="quest-detail-title">
+                    <span id="detailQuestIcon">🧘</span>
+                    <span id="detailQuestName">Meditasi Mindfulness</span>
+                </h2>
+                <button class="quest-detail-close" onclick="closeQuestDetail()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="quest-detail-body">
+                <div class="quest-stats">
+                    <div class="quest-stat">
+                        <div class="quest-stat-value" id="detailQuestXP">+50 XP</div>
+                        <div class="quest-stat-label">Hadiah XP</div>
+                    </div>
+                    <div class="quest-stat">
+                        <div class="quest-stat-value" id="detailQuestDuration">10 menit</div>
+                        <div class="quest-stat-label">Durasi</div>
+                    </div>
+                </div>
+                
+                <div class="quest-detail-section">
+                    <h3 class="quest-detail-section-title">
+                        <i class="fas fa-info-circle"></i>
+                        Deskripsi Quest
+                    </h3>
+                    <p id="detailQuestDescription">10 menit meditasi untuk menenangkan pikiran</p>
+                </div>
+                
+                <div class="quest-detail-section">
+                    <h3 class="quest-detail-section-title">
+                        <i class="fas fa-list-ol"></i>
+                        Langkah-langkah
+                    </h3>
+                    <div id="detailQuestSteps">
+                        <!-- Steps will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="quest-detail-section">
+                    <h3 class="quest-detail-section-title">
+                        <i class="fas fa-star"></i>
+                        Manfaat
+                    </h3>
+                    <div class="quest-benefits" id="detailQuestBenefits">
+                        <!-- Benefits will be populated here -->
+                    </div>
+                </div>
+            </div>
+            <div class="quest-detail-footer">
+                <button class="btn btn-outline-secondary" onclick="closeQuestDetail()">
+                    <i class="fas fa-times me-2"></i>Tutup
+                </button>
+                <button class="btn btn-primary" onclick="selectQuestFromDetail()">
+                    <i class="fas fa-play me-2"></i>Pilih Quest Ini
+                </button>
             </div>
         </div>
     </div>
@@ -1707,12 +2129,34 @@
                                     <div class="timer-time" id="timerDisplay">00:00</div>
                                     <div class="timer-label">Waktu tersisa</div>
                                 </div>
-                                <div class="text-center">
+                                <div class="text-center mb-4">
                                     <button class="btn btn-success btn-lg me-2" onclick="completeQuest()">
                                         <i class="fas fa-check me-2"></i>Selesai
                                     </button>
                                     <button class="btn btn-danger btn-lg" onclick="cancelQuest()">
                                         <i class="fas fa-times me-2"></i>Batalkan
+                                    </button>
+                                </div>
+                                
+                                <!-- Tambahan: Bagian langkah-langkah quest -->
+                                <div class="quest-steps-container mt-4" id="questStepsContainer" style="display: none;">
+                                    <div class="card-title">
+                                        <i class="fas fa-list-ol"></i>
+                                        Langkah-langkah Quest
+                                    </div>
+                                    <div class="quest-steps-list" id="questStepsList">
+                                        <!-- Langkah-langkah akan diisi di sini -->
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <button class="btn btn-outline-primary btn-sm" onclick="toggleSteps()" id="toggleStepsBtn">
+                                            <i class="fas fa-chevron-up me-1"></i>Sembunyikan Langkah
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="showQuestSteps()" id="showStepsBtn">
+                                        <i class="fas fa-list-ol me-1"></i>Tampilkan Langkah-langkah
                                     </button>
                                 </div>
                             </div>
@@ -1857,79 +2301,307 @@
         let timerSeconds = 0;
         let currentTheme = 'light';
         
-        // Quest Database
+        // Quest Database with detailed instructions
         const quests = [
             {
                 id: 1,
                 name: "Meditasi Mindfulness",
                 icon: "🧘",
-                description: "10 menit meditasi untuk menenangkan pikiran",
+                description: "10 menit meditasi untuk menenangkan pikiran dan meningkatkan fokus",
                 duration: 600, // 10 minutes in seconds
                 xp: 50,
-                type: "relaxation"
+                type: "relaxation",
+                steps: [
+                    {
+                        title: "Cari Tempat Tenang",
+                        description: "Temukan tempat yang nyaman dan bebas gangguan. Duduk dengan postur tegak namun rileks."
+                    },
+                    {
+                        title: "Atur Pernapasan",
+                        description: "Tutup mata dan fokus pada napas. Tarik napas dalam melalui hidung, tahan 3 detik, lalu hembuskan perlahan."
+                    },
+                    {
+                        title: "Fokus pada Saat Ini",
+                        description: "Amati pikiran yang muncul tanpa menghakimi. Biarkan pikiran datang dan pergi seperti awan di langit."
+                    },
+                    {
+                        title: "Scan Tubuh",
+                        description: "Perhatikan sensasi di setiap bagian tubuh dari kepala hingga kaki, lepaskan ketegangan."
+                    },
+                    {
+                        title: "Kembali Perlahan",
+                        description: "Perlahan buka mata, gerakkan jari-jari, dan kembali ke aktivitas dengan pikiran yang lebih jernih."
+                    }
+                ],
+                benefits: [
+                    "Mengurangi stres dan kecemasan",
+                    "Meningkatkan fokus dan konsentrasi",
+                    "Meningkatkan kesadaran diri",
+                    "Meningkatkan kualitas tidur",
+                    "Mengatur emosi lebih baik"
+                ]
             },
             {
                 id: 2,
                 name: "Journaling Emosi",
                 icon: "📝",
-                description: "Tulis 5 hal yang kamu syukuri hari ini",
+                description: "Tulis 5 hal yang kamu syukuri hari ini untuk meningkatkan pola pikir positif",
                 duration: 900, // 15 minutes
                 xp: 60,
-                type: "reflection"
+                type: "reflection",
+                steps: [
+                    {
+                        title: "Siapkan Alat Tulis",
+                        description: "Siapkan buku journal atau aplikasi notes. Cari tempat yang nyaman untuk menulis."
+                    },
+                    {
+                        title: "Refleksi Harian",
+                        description: "Pikirkan kembali hari ini dari pagi hingga sekarang. Apa momen yang paling berkesan?"
+                    },
+                    {
+                        title: "Tulis 5 Hal Bersyukur",
+                        description: "Tulis 5 hal yang kamu syukuri hari ini, bisa hal kecil seperti makanan enak atau senyuman dari orang lain."
+                    },
+                    {
+                        title: "Jelaskan Perasaan",
+                        description: "Jelaskan mengapa kamu bersyukur untuk setiap hal tersebut dan bagaimana perasaanmu."
+                    },
+                    {
+                        title: "Rencana Besok",
+                        description: "Akhiri dengan satu hal kecil yang ingin kamu lakukan besok untuk membuat hari lebih baik."
+                    }
+                ],
+                benefits: [
+                    "Meningkatkan rasa syukur",
+                    "Mengurangi gejala depresi",
+                    "Meningkatkan optimisme",
+                    "Membantu pengolahan emosi",
+                    "Meningkatkan self-awareness"
+                ]
             },
             {
                 id: 3,
                 name: "Latihan Pernapasan",
                 icon: "🌬️",
-                description: "5 menit teknik pernapasan dalam",
+                description: "5 menit teknik pernapasan dalam untuk menenangkan sistem saraf",
                 duration: 300, // 5 minutes
                 xp: 30,
-                type: "breathing"
+                type: "breathing",
+                steps: [
+                    {
+                        title: "Posisi Nyaman",
+                        description: "Duduk atau berbaring dengan posisi nyaman. Letakkan satu tangan di dada dan satu di perut."
+                    },
+                    {
+                        title: "Teknik 4-7-8",
+                        description: "Tarik napas perlahan melalui hidung selama 4 hitungan, tahan napas selama 7 hitungan."
+                    },
+                    {
+                        title: "Hembuskan Perlahan",
+                        description: "Hembuskan napas perlahan melalui mulut selama 8 hitungan. Buat suara 'whoosh'."
+                    },
+                    {
+                        title: "Ulangi Siklus",
+                        description: "Ulangi siklus ini 4-5 kali. Fokus hanya pada pernapasan dan hitungan."
+                    },
+                    {
+                        title: "Rasakan Perubahan",
+                        description: "Perhatikan bagaimana tubuh dan pikiranmu menjadi lebih tenang setelah latihan."
+                    }
+                ],
+                benefits: [
+                    "Mengurangi stres instan",
+                    "Menurunkan tekanan darah",
+                    "Meningkatkan kualitas tidur",
+                    "Meningkatkan fokus",
+                    "Menyeimbangkan sistem saraf"
+                ]
             },
             {
                 id: 4,
                 name: "Olahraga Ringan",
                 icon: "🏃",
-                description: "20 menit aktivitas fisik ringan",
+                description: "20 menit aktivitas fisik ringan untuk meningkatkan endorfin dan energi",
                 duration: 1200, // 20 minutes
                 xp: 80,
-                type: "exercise"
+                type: "exercise",
+                steps: [
+                    {
+                        title: "Pemanasan 3 Menit",
+                        description: "Lakukan pemanasan dengan jalan di tempat, gerakan leher, bahu, dan pergelangan kaki."
+                    },
+                    {
+                        title: "Jalan Cepat 10 Menit",
+                        description: "Berjalanlah dengan tempo cepat. Jaga postur tegak dan ayunkan lengan secara natural."
+                    },
+                    {
+                        title: "Stretching 5 Menit",
+                        description: "Lakukan peregangan untuk seluruh tubuh: kaki, punggung, lengan, dan leher."
+                    },
+                    {
+                        title: "Cool Down 2 Menit",
+                        description: "Turunkan intensitas secara bertahap dengan jalan perlahan dan tarik napas dalam."
+                    }
+                ],
+                benefits: [
+                    "Meningkatkan produksi endorfin",
+                    "Meningkatkan energi dan stamina",
+                    "Meningkatkan kualitas tidur",
+                    "Mengurangi gejala kecemasan",
+                    "Meningkatkan kepercayaan diri"
+                ]
             },
             {
                 id: 5,
                 name: "Musik Relaksasi",
                 icon: "🎵",
-                description: "Dengarkan musik menenangkan 15 menit",
+                description: "Dengarkan musik menenangkan 15 menit untuk mengurangi stres dan meningkatkan mood",
                 duration: 900, // 15 minutes
                 xp: 40,
-                type: "relaxation"
+                type: "relaxation",
+                steps: [
+                    {
+                        title: "Pilih Musik yang Cocok",
+                        description: "Pilih musik instrumental, klasik, atau alam yang membuatmu rileks. Gunakan headphone jika memungkinkan."
+                    },
+                    {
+                        title: "Cari Posisi Nyaman",
+                        description: "Duduk atau berbaring di tempat yang nyaman. Matikan atau redupkan lampu."
+                    },
+                    {
+                        title: "Fokus pada Musik",
+                        description: "Fokus pada melodi, ritme, dan instrumentasi. Biarkan musik mengalir melalui dirimu."
+                    },
+                    {
+                        title: "Bernapas Mengikuti Irama",
+                        description: "Sinkronkan napasmu dengan irama musik. Tarik napas saat musik naik, hembuskan saat turun."
+                    },
+                    {
+                        title: "Visualisasi Positif",
+                        description: "Bayangkan tempat yang tenang dan indah saat mendengarkan musik."
+                    }
+                ],
+                benefits: [
+                    "Menurunkan kortisol (hormon stres)",
+                    "Meningkatkan mood secara instan",
+                    "Meningkatkan kreativitas",
+                    "Meningkatkan kualitas tidur",
+                    "Mengurangi kecemasan"
+                ]
             },
             {
                 id: 6,
                 name: "Baca Buku Inspiratif",
                 icon: "📚",
-                description: "Membaca buku pengembangan diri 30 menit",
+                description: "Membaca buku pengembangan diri 30 menit untuk memperluas perspektif",
                 duration: 1800, // 30 minutes
                 xp: 100,
-                type: "learning"
+                type: "learning",
+                steps: [
+                    {
+                        title: "Pilih Buku Inspiratif",
+                        description: "Pilih buku pengembangan diri, biografi inspiratif, atau buku yang memotivasi."
+                    },
+                    {
+                        title: "Cari Lingkungan Tenang",
+                        description: "Cari tempat membaca yang nyaman dengan pencahayaan yang cukup."
+                    },
+                    {
+                        title: "Baca dengan Fokus",
+                        description: "Baca selama 30 menit tanpa gangguan. Matikan notifikasi ponsel."
+                    },
+                    {
+                        title: "Buat Catatan",
+                        description: "Tandai atau catat poin-poin penting yang ingin kamu ingat atau terapkan."
+                    },
+                    {
+                        title: "Refleksi Pribadi",
+                        description: "Luangkan 5 menit untuk merefleksikan bagaimana isi buku dapat kamu terapkan dalam hidupmu."
+                    }
+                ],
+                benefits: [
+                    "Memperluas perspektif",
+                    "Meningkatkan pengetahuan",
+                    "Mengurangi stres",
+                    "Meningkatkan empati",
+                    "Mengasah kemampuan berpikir kritis"
+                ]
             },
             {
                 id: 7,
                 name: "Koneksi Sosial",
                 icon: "💬",
-                description: "Berbicara dengan teman atau keluarga",
+                description: "Berbicara dengan teman atau keluarga untuk meningkatkan kesejahteraan sosial",
                 duration: 1200, // 20 minutes
                 xp: 70,
-                type: "social"
+                type: "social",
+                steps: [
+                    {
+                        title: "Pilih Kontak",
+                        description: "Pilih seseorang yang membuatmu nyaman berbicara - teman, keluarga, atau kolega."
+                    },
+                    {
+                        title: "Siapkan Topik",
+                        description: "Pikirkan topik positif untuk dibahas: pengalaman menyenangkan, rencana masa depan, atau hal ringan."
+                    },
+                    {
+                        title: "Jadwalkan Waktu",
+                        description: "Hubungi via telepon, video call, atau bertemu langsung jika memungkinkan."
+                    },
+                    {
+                        title: "Dengarkan Aktif",
+                        description: "Berbicaralah secara bergantian. Berikan perhatian penuh saat lawan bicara bercerita."
+                    },
+                    {
+                        title: "Ekspresikan Apresiasi",
+                        description: "Akhiri percakapan dengan mengungkapkan rasa terima kasih atas waktu dan cerita yang dibagikan."
+                    }
+                ],
+                benefits: [
+                    "Mengurangi perasaan kesepian",
+                    "Meningkatkan dukungan sosial",
+                    "Meningkatkan mood",
+                    "Mengurangi stres",
+                    "Meningkatkan empati dan keterampilan sosial"
+                ]
             },
             {
                 id: 8,
                 name: "Aktivitas Kreatif",
                 icon: "🎨",
-                description: "Ekspresikan diri lewat seni atau hobi",
+                description: "Ekspresikan diri lewat seni atau hobi untuk meningkatkan kreativitas dan mengurangi stres",
                 duration: 1800, // 30 minutes
                 xp: 90,
-                type: "creative"
+                type: "creative",
+                steps: [
+                    {
+                        title: "Pilih Aktivitas",
+                        description: "Pilih aktivitas kreatif yang disukai: menggambar, mewarnai, menulis, memasak, atau berkebun."
+                    },
+                    {
+                        title: "Siapkan Perlengkapan",
+                        description: "Siapkan semua alat dan bahan yang dibutuhkan. Ciptakan lingkungan yang mendukung kreativitas."
+                    },
+                    {
+                        title: "Fokus pada Proses",
+                        description: "Nikmati prosesnya tanpa terobsesi dengan hasil akhir. Biarkan kreativitas mengalir secara natural."
+                    },
+                    {
+                        title: "Ekspresikan Emosi",
+                        description: "Gunakan aktivitas ini sebagai sarana mengekspresikan perasaan dan pikiranmu."
+                    },
+                    {
+                        title: "Apresiasi Hasil",
+                        description: "Apresiasi usahamu terlepas dari hasilnya. Ingatlah bahwa prosesnya yang paling penting."
+                    }
+                ],
+                benefits: [
+                    "Meningkatkan kreativitas",
+                    "Mengurangi stres dan kecemasan",
+                    "Meningkatkan self-expression",
+                    "Meningkatkan fokus dan perhatian",
+                    "Memberikan rasa pencapaian"
+                ]
             }
         ];
         
@@ -2075,6 +2747,13 @@
                     !settingsPanel.contains(event.target) && 
                     themeToggle && !themeToggle.contains(event.target)) {
                     settingsPanel.classList.remove('show');
+                }
+            });
+            
+            // Close quest detail modal when clicking outside
+            document.getElementById('questDetailModal').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    closeQuestDetail();
                 }
             });
             
@@ -2411,14 +3090,20 @@
                         <i class="fas fa-clock me-1"></i>
                         ${Math.floor(quest.duration / 60)} menit
                     </div>
+                    <button class="quest-detail-btn" onclick="showQuestDetail(${quest.id})" title="Lihat detail quest">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
                 `;
                 
-                questCard.addEventListener('click', function() {
-                    document.querySelectorAll('.quest-card').forEach(card => {
-                        card.classList.remove('active');
-                    });
-                    questCard.classList.add('active');
-                    selectedQuest = quest;
+                questCard.addEventListener('click', function(e) {
+                    // Jangan aktifkan jika yang diklik adalah tombol detail
+                    if (!e.target.closest('.quest-detail-btn')) {
+                        document.querySelectorAll('.quest-card').forEach(card => {
+                            card.classList.remove('active');
+                        });
+                        questCard.classList.add('active');
+                        selectedQuest = quest;
+                    }
                 });
                 
                 questList.appendChild(questCard);
@@ -2434,6 +3119,165 @@
                 stressed: '😰'
             };
             return emojis[mood] || '😐';
+        }
+        
+        // ========================
+        // Quest Detail Modal Functions
+        // ========================
+        
+        function showQuestDetail(questId) {
+            const quest = quests.find(q => q.id === questId);
+            if (!quest) return;
+            
+            // Populate modal with quest details
+            document.getElementById('detailQuestIcon').textContent = quest.icon;
+            document.getElementById('detailQuestName').textContent = quest.name;
+            document.getElementById('detailQuestXP').textContent = `+${quest.xp} XP`;
+            document.getElementById('detailQuestDuration').textContent = `${Math.floor(quest.duration / 60)} menit`;
+            document.getElementById('detailQuestDescription').textContent = quest.description;
+            
+            // Populate steps
+            const stepsContainer = document.getElementById('detailQuestSteps');
+            stepsContainer.innerHTML = '';
+            
+            quest.steps.forEach((step, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'quest-detail-step';
+                stepDiv.innerHTML = `
+                    <div class="step-number">${index + 1}</div>
+                    <div class="step-content">
+                        <div class="step-title">${step.title}</div>
+                        <div class="step-desc">${step.description}</div>
+                    </div>
+                `;
+                stepsContainer.appendChild(stepDiv);
+            });
+            
+            // Populate benefits
+            const benefitsContainer = document.getElementById('detailQuestBenefits');
+            benefitsContainer.innerHTML = '';
+            
+            quest.benefits.forEach(benefit => {
+                const benefitDiv = document.createElement('div');
+                benefitDiv.className = 'benefit-item';
+                benefitDiv.innerHTML = `
+                    <i class="fas fa-check-circle benefit-icon"></i>
+                    <span>${benefit}</span>
+                `;
+                benefitsContainer.appendChild(benefitDiv);
+            });
+            
+            // Show modal
+            document.getElementById('questDetailModal').style.display = 'flex';
+        }
+        
+        function closeQuestDetail() {
+            document.getElementById('questDetailModal').style.display = 'none';
+        }
+        
+        function selectQuestFromDetail() {
+            const questName = document.getElementById('detailQuestName').textContent;
+            const quest = quests.find(q => q.name === questName);
+            
+            if (quest) {
+                // Select this quest
+                selectedQuest = quest;
+                
+                // Update UI to show selected quest
+                document.querySelectorAll('.quest-card').forEach(card => {
+                    card.classList.remove('active');
+                    if (parseInt(card.dataset.questId) === quest.id) {
+                        card.classList.add('active');
+                    }
+                });
+                
+                // Close modal
+                closeQuestDetail();
+                
+                // Scroll to show selected quest
+                const activeCard = document.querySelector('.quest-card.active');
+                if (activeCard) {
+                    activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+        }
+        
+        // ========================
+        // Quest Steps Functions (Baru)
+        // ========================
+        
+        function showQuestSteps() {
+            if (!selectedQuest) return;
+            
+            const stepsContainer = document.getElementById('questStepsContainer');
+            const stepsList = document.getElementById('questStepsList');
+            const showBtn = document.getElementById('showStepsBtn');
+            const toggleBtn = document.getElementById('toggleStepsBtn');
+            
+            // Clear existing steps
+            stepsList.innerHTML = '';
+            
+            // Populate steps
+            selectedQuest.steps.forEach((step, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'quest-step-item';
+                stepDiv.innerHTML = `
+                    <div class="step-indicator">${index + 1}</div>
+                    <div class="step-content">
+                        <div class="step-title">${step.title}</div>
+                        <div class="step-desc">${step.description}</div>
+                    </div>
+                `;
+                stepsList.appendChild(stepDiv);
+            });
+            
+            // Show steps container
+            stepsContainer.style.display = 'block';
+            showBtn.style.display = 'none';
+            toggleBtn.innerHTML = '<i class="fas fa-chevron-up me-1"></i>Sembunyikan Langkah';
+            
+            // Auto-highlight current step berdasarkan waktu
+            highlightCurrentStep();
+        }
+        
+        function toggleSteps() {
+            const stepsContainer = document.getElementById('questStepsContainer');
+            const showBtn = document.getElementById('showStepsBtn');
+            const toggleBtn = document.getElementById('toggleStepsBtn');
+            
+            if (stepsContainer.style.display === 'none') {
+                stepsContainer.style.display = 'block';
+                showBtn.style.display = 'none';
+                toggleBtn.innerHTML = '<i class="fas fa-chevron-up me-1"></i>Sembunyikan Langkah';
+                
+                // Auto-highlight current step
+                highlightCurrentStep();
+            } else {
+                stepsContainer.style.display = 'none';
+                showBtn.style.display = 'block';
+                toggleBtn.innerHTML = '<i class="fas fa-chevron-down me-1"></i>Tampilkan Langkah';
+            }
+        }
+        
+        function highlightCurrentStep() {
+            if (!selectedQuest || !selectedQuest.steps) return;
+            
+            const totalDuration = selectedQuest.duration;
+            const elapsedTime = selectedQuest.duration - timerSeconds;
+            const stepDuration = totalDuration / selectedQuest.steps.length;
+            const currentStepIndex = Math.floor(elapsedTime / stepDuration);
+            
+            const stepItems = document.querySelectorAll('.quest-step-item');
+            
+            stepItems.forEach((item, index) => {
+                item.classList.remove('active-step', 'completed-step');
+                
+                if (index < currentStepIndex) {
+                    item.classList.add('completed-step');
+                } else if (index === currentStepIndex) {
+                    item.classList.add('active-step');
+                }
+            });
         }
         
         // ========================
@@ -2453,6 +3297,11 @@
             // Set quest name
             document.getElementById('activeQuestName').textContent = selectedQuest.name;
             
+            // Reset steps display
+            document.getElementById('questStepsContainer').style.display = 'none';
+            document.getElementById('showStepsBtn').style.display = 'block';
+            document.getElementById('toggleStepsBtn').innerHTML = '<i class="fas fa-chevron-up me-1"></i>Sembunyikan Langkah';
+            
             // Start timer
             timerSeconds = selectedQuest.duration;
             updateTimerDisplay();
@@ -2460,6 +3309,9 @@
             timerInterval = setInterval(() => {
                 timerSeconds--;
                 updateTimerDisplay();
+                
+                // Update step highlighting setiap detik
+                highlightCurrentStep();
                 
                 if (timerSeconds <= 0) {
                     clearInterval(timerInterval);
@@ -2574,6 +3426,10 @@
                 card.classList.remove('active');
             });
             
+            // Reset steps display
+            document.getElementById('questStepsContainer').style.display = 'none';
+            document.getElementById('showStepsBtn').style.display = 'block';
+            
             updateUserStats();
         }
         
@@ -2618,6 +3474,10 @@
             document.querySelectorAll('.mood-item').forEach(item => {
                 item.classList.remove('active');
             });
+            
+            // Reset steps display
+            document.getElementById('questStepsContainer').style.display = 'none';
+            document.getElementById('showStepsBtn').style.display = 'block';
             
             updateUserStats();
         }
@@ -2773,11 +3633,12 @@
         
         function showDemo() {
             // Simulasi cepat demo
-            alert('🚀 Demo Mode: Lihat bagaimana VibeQuest bekerja!\n\n1. Pilih mood kamu\n2. Pilih quest yang sesuai\n3. Selesaikan quest dan dapatkan XP\n4. Tingkatkan level dan kumpulkan badge!');
+            alert('🚀 Demo Mode: Lihat bagaimana VibeQuest bekerja!\n\n1. Pilih mood kamu\n2. Pilih quest yang sesuai\n3. Lihat detail quest untuk instruksi lengkap\n4. Selesaikan quest dan dapatkan XP\n5. Tingkatkan level dan kumpulkan badge!');
             
             // Tampilkan carousel demo
             const demoMessages = [
                 "🎯 Pilih quest berdasarkan mood harianmu",
+                "📖 Lihat detail lengkap cara melakukan setiap quest",
                 "🔥 Pertahankan streak untuk bonus spesial",
                 "📊 Pantau perkembangan dengan analisis detail",
                 "🏆 Kumpulkan badge dan naik level!"
@@ -2829,6 +3690,9 @@
                     createFloatingEmojis();
                 }, 100);
             }
+            
+            // Close quest detail modal jika terbuka
+            closeQuestDetail();
         }
         
         function getUsers() {
